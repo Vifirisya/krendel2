@@ -14,22 +14,22 @@
 
     <link name="body_link">
         <visual>
-            <origin xyz="0 0 0.0665"/>
+            <origin xyz="0 0 0.04875"/>
             <geometry>
-                <box size="0.2 0.179 0.154"/>
+                <box size="0.2 0.1795 0.1185"/>
             </geometry>
             <material name="orange"/>
         </visual>
         
         <collision>
-            <origin xyz="0 0 0.0665"/>
+            <origin xyz="0 0 0.04875"/>
             <geometry>
-                <box size="0.2 0.179 0.154"/>
+                <box size="0.2 0.1795 0.1185"/>
             </geometry>
         </collision>
         
-        <xacro:inertial_box mass="2" x="0.2" y="0.179" z="0.154">
-            <origin xyz="0 0 0.0665"/>
+        <xacro:inertial_box mass="2" x="0.2" y="0.1795" z="0.1185">
+            <origin xyz="0 0 0.04875"/>
         </xacro:inertial_box>
     </link>
 
@@ -43,6 +43,108 @@
         <material>Gazebo/Orange</material>
     </gazebo>
 
+    <!-- COLUMNS -->
+
+    <link name="columns_link">
+
+        <!-- FRONT RIGHT -->
+
+        <visual>
+            <origin xyz="0.093306 -0.07725 0"/>
+            <geometry>
+                <box size="0.015 0.025 0.030"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <!-- FRONT LEFT -->
+         
+        <visual>
+            <origin xyz="0.088306 0.08225 0"/>
+            <geometry>
+                <box size="0.025 0.015 0.030"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <!-- REAR RIGHT -->
+         
+        <visual>
+            <origin xyz="-0.088306 -0.08225 0"/>
+            <geometry>
+                <box size="0.025 0.015 0.030"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+        <!-- REAR LEFT -->
+         
+        <visual>
+            <origin xyz="-0.093306 0.07725 0"/>
+            <geometry>
+                <box size="0.015 0.025 0.030"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+
+
+
+        <collision>
+            <origin xyz="0 0 0.0"/>
+            <geometry>
+                <box size="0.2 0.1795 0.030"/>
+            </geometry>
+        </collision>
+        
+        <xacro:inertial_box mass="0.001" x="0.2" y="0.1795" z="0.030">
+            <origin xyz="0 0 0.0"/>
+        </xacro:inertial_box>
+
+    </link>
+
+    <joint name="columns_joint" type="fixed">
+        <parent link="body_link"/>
+        <child link="columns_link"/>
+        <origin xyz="0 0 0.123"/>
+    </joint>
+
+    <gazebo reference="columns_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+    <!-- PLATFORM -->
+
+    <link name="platform_link">
+        <visual>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.1795 0.006"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+        
+        <collision>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.1795 0.006"/>
+            </geometry>
+        </collision>
+        
+        <xacro:inertial_box mass="0.001" x="0.2" y="0.1795" z="0.006">
+            <origin xyz="0 0 00"/>
+        </xacro:inertial_box>
+    </link>
+
+    <joint name="platform_joint" type="fixed">
+        <parent link="body_link"/>
+        <child link="platform_link"/>
+        <origin xyz="0 0 0.141"/>
+    </joint>
+
+    <gazebo reference="platform_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
     <!-- WHEELS -->
 
     <!-- LEFT WHEEL -->
@@ -50,26 +152,26 @@
     <link name="wheel_left_link">
         <visual>
             <geometry>
-                <cylinder radius="0.0255" length="0.015"/>
+                <cylinder radius="0.026" length="0.015"/>
             </geometry>
             <material name="blue"/>
         </visual>
 
         <collision>
             <geometry>
-                <cylinder radius="0.0255" length="0.015"/>
+                <cylinder radius="0.026" length="0.015"/>
             </geometry>
         </collision>
 
-        <xacro:inertial_cylinder mass="0.1" length="0.015" radius="0.0255">
-            <origin xyz="0 0 0"/>
+        <xacro:inertial_cylinder mass="0.1" length="0.015" radius="0.026">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
     </link>
 
     <joint name="wheel_left_joint" type="continuous">
         <parent link="base_link"/>
         <child link="wheel_left_link"/>
-        <origin xyz="0 0.0685 0" rpy="-${pi/2} 0 0"/>
+        <origin xyz="0 0.07225 0" rpy="-${pi/2} 0 0"/>
         <axis xyz="0 0 1"/>
     </joint>
 
@@ -82,30 +184,30 @@
     <link name="wheel_right_link">
         <visual>
             <geometry>
-                <cylinder radius="0.0255" length="0.015"/>
+                <cylinder radius="0.026" length="0.015"/>
             </geometry>
             <material name="blue"/>
         </visual>
 
         <collision>
             <geometry>
-                <cylinder radius="0.0255" length="0.015"/>
+                <cylinder radius="0.026" length="0.015"/>
             </geometry>
         </collision>
 
-        <xacro:inertial_cylinder mass="0.1" length="0.015" radius="0.0255">
-            <origin xyz="0 0 0"/>
+        <xacro:inertial_cylinder mass="0.1" length="0.015" radius="0.026">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
     </link>
 
     <joint name="wheel_right_joint" type="continuous">
         <parent link="base_link"/>
         <child link="wheel_right_link"/>
-        <origin xyz="0 -0.0685 0" rpy="${pi/2} 0 0"/>
+        <origin xyz="0 -0.07225 0" rpy="${pi/2} 0 0"/>
         <axis xyz="0 0 -1"/>
     </joint>
 
-    <gazebo reference="wheel_right_link">
+     <gazebo reference="wheel_left_link">
         <material>Gazebo/Blue</material>
     </gazebo>
 
@@ -116,17 +218,17 @@
     <link name="caster_rf_link">
         <visual>
             <geometry>
-                <sphere radius="0.00675"/>
+                <sphere radius="0.00625"/>
             </geometry>
         </visual>
 
         <collision>
             <geometry>
-                <sphere radius="0.00675"/>
+                <sphere radius="0.00625"/>
             </geometry>
         </collision>
 
-        <xacro:inertial_sphere mass="0.01" radius="0.00675">
+        <xacro:inertial_sphere mass="0.01" radius="0.00625">
             <origin xyz="0 0 0"/>
         </xacro:inertial_sphere>
     </link>
@@ -134,7 +236,7 @@
     <joint name="caster_rf_joint" type="fixed">
         <parent link="body_link"/>
         <child link="caster_rf_link"/>
-        <origin xyz="0.08435 -0.0431 -0.01875"/>
+        <origin xyz="0.08435 -0.0431 -0.01825"/>
     </joint>
 
     <gazebo reference="caster_rf_link">
@@ -148,18 +250,18 @@
     <link name="caster_lf_link">
         <visual>
             <geometry>
-                <sphere radius="0.00675"/>
+                <sphere radius="0.00625"/>
             </geometry>
             <material name="orange"/>
         </visual>
 
         <collision>
             <geometry>
-                <sphere radius="0.00675"/>
+                <sphere radius="0.00625"/>
             </geometry>
         </collision>
 
-        <xacro:inertial_sphere mass="0.01" radius="0.00675">
+        <xacro:inertial_sphere mass="0.01" radius="0.00625">
             <origin xyz="0 0 0"/>
         </xacro:inertial_sphere>
     </link>
@@ -167,7 +269,7 @@
     <joint name="caster_lf_joint" type="fixed">
         <parent link="body_link"/>
         <child link="caster_lf_link"/>
-        <origin xyz="0.08435 0.0431 -0.01875"/>
+        <origin xyz="0.08435 0.0431 -0.01825"/>
     </joint>
 
     <gazebo reference="caster_lf_link">
@@ -181,18 +283,18 @@
     <link name="caster_rr_link">
         <visual>
             <geometry>
-                <sphere radius="0.00675"/>
+                <sphere radius="0.00625"/>
             </geometry>
             <material name="orange"/>
         </visual>
 
         <collision>
             <geometry>
-                <sphere radius="0.00675"/>
+                <sphere radius="0.00625"/>
             </geometry>
         </collision>
 
-        <xacro:inertial_sphere mass="0.01" radius="0.00675">
+        <xacro:inertial_sphere mass="0.01" radius="0.00625">
             <origin xyz="0 0 0"/>
         </xacro:inertial_sphere>
     </link>
@@ -200,7 +302,7 @@
     <joint name="caster_rr_joint" type="fixed">
         <parent link="body_link"/>
         <child link="caster_rr_link"/>
-        <origin xyz="-0.08435 -0.0431 -0.01875"/>
+        <origin xyz="-0.08435 -0.0431 -0.01825"/>
     </joint>
 
     <gazebo reference="caster_rr_link">
@@ -214,18 +316,18 @@
     <link name="caster_lr_link">
         <visual>
             <geometry>
-                <sphere radius="0.00675"/>
+                <sphere radius="0.00625"/>
             </geometry>
             <material name="orange"/>
         </visual>
 
         <collision>
             <geometry>
-                <sphere radius="0.00675"/>
+                <sphere radius="0.00625"/>
             </geometry>
         </collision>
 
-        <xacro:inertial_sphere mass="0.01" radius="0.00675">
+        <xacro:inertial_sphere mass="0.01" radius="0.00625">
             <origin xyz="0 0 0"/>
         </xacro:inertial_sphere>
     </link>
@@ -233,7 +335,7 @@
     <joint name="caster_lr_joint" type="fixed">
         <parent link="body_link"/>
         <child link="caster_lr_link"/>
-        <origin xyz="-0.08435 0.0431 -0.01875"/>
+        <origin xyz="-0.08435 0.0431 -0.01825"/>
     </joint>
 
     <gazebo reference="caster_lr_link">
