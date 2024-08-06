@@ -207,7 +207,7 @@
         <axis xyz="0 0 -1"/>
     </joint>
 
-     <gazebo reference="wheel_left_link">
+     <gazebo reference="wheel_right_link">
         <material>Gazebo/Blue</material>
     </gazebo>
 
