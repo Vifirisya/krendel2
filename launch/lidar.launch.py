@@ -24,8 +24,8 @@ def generate_launch_description():
 
             parameters=[{
 
-                'serial_port': '/dev/rplidar',
-		'serial_baudrate': 115200,
+                'serial_port': '/dev/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.3:1.0-port0',
+		        'serial_baudrate': 115200,
                 'frame_id': 'laser_frame',
 
                 'angle_compensate': True,
