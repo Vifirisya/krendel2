@@ -24,23 +24,6 @@ def generate_launch_description():
 
     package_name='krendel2' #<--- CHANGE ME
 
-    hardware = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory(package_name),'launch','launch_robot.launch.py'
-                )]))
-    
-    lidar = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory(package_name),'launch','lidar.launch.py'
-                )]))
-    
-    slam_params_file = os.path.join(get_package_share_directory(package_name), 'config', 'mapper_params_online_async.yaml')
-    slam_toolbox = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(
-                    get_package_share_directory('slam_toolbox'),'launch','online_async_launch.py'
-                )]), launch_arguments={'slam_params_file': slam_params_file, 'use_sim_time': 'false'}.items()
-    )
-
     navigation = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory(package_name),'launch','navigation_launch.py'
@@ -49,8 +32,5 @@ def generate_launch_description():
     
     # Launch them all!
     return LaunchDescription([
-        hardware,
-        lidar,
-        slam_toolbox,
         navigation
     ])

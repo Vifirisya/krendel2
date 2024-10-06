@@ -29,8 +29,8 @@ def generate_launch_description():
     twist_mux = Node(
         package="twist_mux",
         executable="twist_mux",
-        parameters=[twist_mux_params, {'use_sim_time': True}],
-        remappings=[{'/cmd_vel_out','/diff_drive_controller/cmd_vel_unstamped'}]
+        parameters=[{'--params-file':twist_mux_params}, {'use_sim_time': False}],
+        remappings=[('/cmd_vel_out','/diff_drive_controller/cmd_vel_unstamped')]
     )
 
     gazebo_params_file = os.path.join(get_package_share_directory(package_name), "config", "gazebo_params.yaml")

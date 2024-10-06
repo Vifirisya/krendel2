@@ -33,7 +33,7 @@ def generate_launch_description():
     twist_mux = Node(
         package="twist_mux",
         executable="twist_mux",
-        parameters=[{"--params-file":twist_mux_params}, {'use_sim_time': False}],
+        parameters=[{'--params-file':twist_mux_params}, {'use_sim_time': False}],
         remappings=[('/cmd_vel_out','/diff_drive_controller/cmd_vel_unstamped')]
     )
     
@@ -80,8 +80,8 @@ def generate_launch_description():
 
     # Launch them all!
     return LaunchDescription([
-        rsp,
         twist_mux,
+        rsp,
         delayed_controller_manager,
         delayed_diff_drive_spawner,
         delayed_joint_broad_spawner
