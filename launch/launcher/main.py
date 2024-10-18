@@ -1,8 +1,13 @@
 from launcher import Process, Launcher
-from communication import Communication
+from communication import Communication, myIP
+import os
 
-IP = "192.168.50.217"
+IP = myIP()
 PORT = 2000
+
+#print(os.path.realpath(__file__).replace(f"/main.py", "") + "/ip.txt")
+with open(os.path.realpath(__file__).replace(f"/main.py", "") + "/ip.txt", "w") as f:
+    f.write(IP)
 
 PACKAGE_NAME = "krendel2"
 LAUNCH_FILES = [Process("robot", "launch_robot.launch.py"),
@@ -35,6 +40,12 @@ def kill(data=None):
         print(data)
         launcher.stop(file_keys[data.split(':')[1]])
 
+def close(data=None):
+    os.system("sudo shutdown now")
+
+def reload(data=None):
+    os.system("sudo systemctl reboot")
+
 def speed(data=None):
     if data:
         linear = float(data.split('l')[1].split('a')[0])
@@ -47,8 +58,22 @@ def go(data=None):
 worklist = {'l':launch,
             's':speed,
             'k':kill,
-            'g':go,}
+            'g':go,
+            'c':close,
+            'r':reload}
 
+print(myIP())
 communication = Communication(IP, PORT)
 communication.worklist = worklist
+
+while True:
+    try:
+        pass
+    except KeyboardInterrupt:
+        print("\nSafe stop\n")
+        break
+    finally:
+        communication.stop()
+        break
+    
 #launcher.finish()

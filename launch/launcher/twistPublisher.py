@@ -4,15 +4,19 @@ from geometry_msgs.msg import Twist
 import socket
 import time
 from threading import Thread
+import os
 
 cmd_value = {"linear" : 0, "angular" : 0}
-ip = "192.168.50.217"
+ip = ""
+with open(os.path.realpath(__file__).replace(f"/main.py", "") + "/ip.txt", "w") as f:
+    ip = f.read()
 port = 2001
 
 lastCall = time.time()
 maxSilenceTime = 3
 
 class TwistPublisher(Node):
+    running = True
     def __init__(self):
         super().__init__("twist_publisher")
         self.publisher_ = self.create_publisher(Twist, "cmd_vel_manual", 10)
@@ -38,7 +42,7 @@ class TwistPublisher(Node):
 
     def listen(self):
         global lastCall, cmd_value
-        while True:
+        while self.running:
             data, address = self.s.recvfrom(2048)
             data = data.decode("UTF-8")
 
@@ -53,10 +57,17 @@ class TwistPublisher(Node):
                 except Exception:
                     pass # pretend nothing happend
 
-def start(args=None):
-    rclpy.init(args=args)
-    node = TwistPublisher()
-    rclpy.spin(node)
-    rclpy.shutdown()
+    def stop(self):
+        self.running = False
+        self.listenThread.join()
 
-start()
+node = None
+def start(args=None):
+    global node
+    rclpy.init(args=args)
+    try:
+        node = TwistPublisher()
+        rclpy.spin(node)
+        rclpy.shutdown()
+    finally:
+        node.stop()

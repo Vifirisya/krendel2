@@ -62,6 +62,12 @@ class Launcher:
         self.processes[name].process = subprocess.Popen(["python3", filename])
         self.processes[name].running = True
 
+    def runpy(self, name):
+        inform(f"Running \"{name}\"")
+        filename = self.processes[name].filename
+        self.processes[name].process = subprocess.Popen(["python3", filename])
+        self.processes[name].running = True
+
     def stop(self, name:str):
         while self.processes[name].ping():
             inform(f"Killing \"{name}\"")
