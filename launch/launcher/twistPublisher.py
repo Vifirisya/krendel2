@@ -8,7 +8,7 @@ import os
 
 cmd_value = {"linear" : 0, "angular" : 0}
 ip = ""
-with open(os.path.realpath(__file__).replace(f"/main.py", "") + "/ip.txt", "w") as f:
+with open(os.path.realpath(__file__).replace(f"/twistPublisher.py", "") + "/ip.txt", "w") as f:
     ip = f.read()
 port = 2001
 
