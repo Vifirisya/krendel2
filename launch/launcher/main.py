@@ -43,16 +43,12 @@ def kill(data=None):
 
 def close(data=None):
     #os.popen("sudo -S %s"%("shutdown now"), 'w').write('123456\n')
-    subprocess.run(['sudo', "shutdown now"], input="123456".encode())
+    #subprocess.run(['sudo', "shutdown now"], input="123456".encode())
+    os.system("sudo shutdown now")
     
 
 def reload(data=None):
-    #os.system("sudo systemctl reboot")
-    #os.popen("sudo -S %s"%("systemctl reboot"), 'w').write('123456\n')
-
-    subprocess.Popen('sudo -S' , shell=True,stdout=subprocess.PIPE)
-    subprocess.Popen("123456" , shell=True,stdout=subprocess.PIPE)
-    subprocess.Popen("sudo systemctl reboot" , shell=True,stdout=subprocess.PIPE)
+    os.system("sudo systemctl reboot")
 
 def speed(data=None):
     if data:
