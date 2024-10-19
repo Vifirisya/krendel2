@@ -41,11 +41,11 @@ def kill(data=None):
         launcher.stop(file_keys[data.split(':')[1]])
 
 def close(data=None):
-    os.popen("sudo -S %s"%("sudo shutdown now"), 'w').write('123456\n')
+    os.popen("sudo -S %s"%("shutdown now"), 'w').write('123456\n')
 
 def reload(data=None):
     #os.system("sudo systemctl reboot")
-    os.popen("sudo -S %s"%("sudo systemctl reboot"), 'w').write('123456\n')
+    os.popen("sudo -S %s"%("systemctl reboot"), 'w').write('123456\n')
 
 def speed(data=None):
     if data:
