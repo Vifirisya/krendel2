@@ -2,7 +2,6 @@ from launcher import Process, Launcher
 from communication import Communication, myIP
 import os
 import subprocess
-import sh
 
 IP = myIP()
 PORT = 2000
