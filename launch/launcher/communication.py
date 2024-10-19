@@ -28,25 +28,25 @@ class Communication:
         self.s.bind((ip, port))
 
         inform("Starting listening")
-        self.listenThread = Thread(target=self.listen)
-        self.listenThread.start()
+        #self.listenThread = Thread(target=self.listen)
+        #self.listenThread.start()
         
     def listen(self):
-        while self.running:
-            data, address = self.s.recvfrom(2048)
-            data = data.decode("UTF-8")
-            inform(f"{address} sent \"{data}\"")
+        #while self.running:
+        data, address = self.s.recvfrom(2048)
+        data = data.decode("UTF-8")
+        inform(f"{address} sent \"{data}\"")
 
-            self.worklist[data[0]](data)
+        self.worklist[data[0]](data)
 
     def simplySend(self, data, address):
         self.s.sendto(bytes(data, "UTF-8"), address)
 
-    def stop(self):
-        try:
-            self.running = False
-            self.listenThread.join()
-        except KeyboardInterrupt:
-            print("aa")
-            self.running = False
-            self.listenThread.join()
+    #def stop(self):
+    #    try:
+    #        self.running = False
+     #       self.listenThread.join()
+   #     except KeyboardInterrupt:
+    #        print("aa")
+     #       self.running = False
+     #       self.listenThread.join()

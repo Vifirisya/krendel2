@@ -20,7 +20,7 @@ launcher = Launcher(PACKAGE_NAME)
 for process in LAUNCH_FILES:
     launcher.add(process)
 
-launcher.runpy("tp")
+#launcher.runpy("tp")
 
 def launch(data=None):
     file_keys = {'l': "lidar",
@@ -68,12 +68,12 @@ communication.worklist = worklist
 
 while True:
     try:
-        pass
+        communication.listen()
     except KeyboardInterrupt:
         print("\nSafe stop\n")
         break
     finally:
-        communication.stop()
-        break
+        #communication.stop()
+        pass
     
 #launcher.finish()
