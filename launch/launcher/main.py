@@ -43,7 +43,7 @@ def kill(data=None):
 
 def close(data=None):
     #os.popen("sudo -S %s"%("shutdown now"), 'w').write('123456\n')
-    subprocess.run(['sudo', '-S', "sudo shutdown now"], input="123456".encode())
+    subprocess.run(['sudo', '-S', "shutdown now"], input="123456".encode())
     
 
 def reload(data=None):
