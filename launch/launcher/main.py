@@ -1,6 +1,7 @@
 from launcher import Process, Launcher
 from communication import Communication, myIP
 import os
+import subprocess
 
 IP = myIP()
 PORT = 2000
@@ -41,11 +42,19 @@ def kill(data=None):
         launcher.stop(file_keys[data.split(':')[1]])
 
 def close(data=None):
-    os.popen("sudo -S %s"%("shutdown now"), 'w').write('123456\n')
+    #os.popen("sudo -S %s"%("shutdown now"), 'w').write('123456\n')
+
+    subprocess.Popen('sudo -S' , shell=True,stdout=subprocess.PIPE)
+    subprocess.Popen("123456" , shell=True,stdout=subprocess.PIPE)
+    subprocess.Popen("sudo shutdown now" , shell=True,stdout=subprocess.PIPE)
 
 def reload(data=None):
     #os.system("sudo systemctl reboot")
-    os.popen("sudo -S %s"%("systemctl reboot"), 'w').write('123456\n')
+    #os.popen("sudo -S %s"%("systemctl reboot"), 'w').write('123456\n')
+
+    subprocess.Popen('sudo -S' , shell=True,stdout=subprocess.PIPE)
+    subprocess.Popen("123456" , shell=True,stdout=subprocess.PIPE)
+    subprocess.Popen("sudo systemctl reboot" , shell=True,stdout=subprocess.PIPE)
 
 def speed(data=None):
     if data:
