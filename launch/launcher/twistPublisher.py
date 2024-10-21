@@ -71,3 +71,5 @@ def start(args=None):
         rclpy.shutdown()
     finally:
         node.stop()
+
+start()
