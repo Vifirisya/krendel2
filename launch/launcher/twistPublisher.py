@@ -19,7 +19,7 @@ class TwistPublisher(Node):
     running = True
     def __init__(self):
         super().__init__("twist_publisher")
-        self.publisher_ = self.create_publisher(Twist, "cmd_vel_manual", 10)
+        self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
         self.timer_ = self.create_timer(1.0/5.0, self.publish)
 
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
