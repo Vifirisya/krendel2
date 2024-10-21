@@ -1,7 +1,6 @@
 from launcher import Process, Launcher
 from communication import Communication, myIP
 import os
-import subprocess
 
 IP = myIP()
 PORT = 2000
@@ -21,7 +20,7 @@ launcher = Launcher(PACKAGE_NAME)
 for process in LAUNCH_FILES:
     launcher.add(process)
 
-#launcher.runpy("tp")
+launcher.runpy("tp")
 
 def launch(data=None):
     file_keys = {'l': "lidar",
