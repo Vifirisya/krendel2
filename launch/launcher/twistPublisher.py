@@ -34,21 +34,21 @@ class TwistPublisher(Node):
 
         data, address = self.s.recvfrom(16)
         data = data.decode("UTF-8")
-        while not data:
+        if not data:
             cmd_vel_manual.linear.x = 0.0
             cmd_vel_manual.angular.z = 0.0
 
             self.publisher_.publish(cmd_vel_manual)
+        else:
+            linear = float(data.split(';')[0])
+            angular = float(data.split(';')[1])
 
-        linear = float(data.split(';')[0])
-        angular = float(data.split(';')[1])
+            cmd_vel_manual.linear.x = float(linear)
+            cmd_vel_manual.angular.z = float(angular)
 
-        cmd_vel_manual.linear.x = float(linear)
-        cmd_vel_manual.angular.z = float(angular)
-
-        self.publisher_.publish(cmd_vel_manual)
+            self.publisher_.publish(cmd_vel_manual)
         
-        self.get_logger().info(f"{linear}, {angular}")
+            self.get_logger().info(f"{linear}, {angular}")
             #lastCall = time.time()
         #if time.time() - lastCall <= maxSilenceTime:
         #   cmd_vel_manual.linear.x = float(cmd_value["linear"])
