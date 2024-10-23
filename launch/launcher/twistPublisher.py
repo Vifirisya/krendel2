@@ -57,7 +57,10 @@ class TwistPublisher(Node):
                 except Exception:
                     pass # pretend nothing happend
 
+        print("im finally done!!!!!!!")
+
     def stop(self):
+        print("trying to stop this idiot")
         self.running = False
         self.listenThread.join()
 
@@ -68,8 +71,8 @@ def start(args=None):
     try:
         node = TwistPublisher()
         rclpy.spin(node)
-        rclpy.shutdown()
     finally:
         node.stop()
+        rclpy.shutdown()
 
 start()
