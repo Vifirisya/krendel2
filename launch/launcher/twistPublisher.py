@@ -55,6 +55,7 @@ class TwistPublisher(Node):
                     cmd_value["angular"] = angular
 
                     lastCall = time.time()
+                    print(data)
                 except KeyboardInterrupt:
                     print("ctrl c")
                     exit()
@@ -78,6 +79,9 @@ def start(args=None):
     finally:
         node.stop()
         time.sleep(2)
-        rclpy.shutdown()
+        try:
+            rclpy.shutdown()
+        finally:
+            exit()
 
 start()

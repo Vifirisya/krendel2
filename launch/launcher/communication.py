@@ -35,7 +35,7 @@ class Communication:
         #while self.running:
         data, address = self.s.recvfrom(2048)
         data = data.decode("UTF-8")
-        inform(f"{address} sent \"{data}\"")
+        #inform(f"{address} sent \"{data}\"")
 
         self.worklist[data[0]](data)
 
