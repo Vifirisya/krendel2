@@ -36,21 +36,20 @@ class TwistPublisher(Node):
         data = data.decode("UTF-8")
 
         if data:
-            try:
-                linear = float(data.split(';')[0])
-                angular = float(data.split(';')[1])
-                #cmd_value["linear"] = linear
-                #cmd_value["angular"] = angular
+            linear = float(data.split(';')[0])
+            angular = float(data.split(';')[1])
 
-                cmd_vel_manual.linear.x = float(linear)
-                cmd_vel_manual.angular.z = float(angular)
+            cmd_vel_manual.linear.x = float(linear)
+            cmd_vel_manual.angular.z = float(angular)
 
-                self.publisher_.publish(cmd_vel_manual)
+            self.publisher_.publish(cmd_vel_manual)
 
                 #lastCall = time.time()
-            except Exception:
-                pass # pretend nothing happend
+        else:
+            cmd_vel_manual.linear.x = 0.0
+            cmd_vel_manual.angular.z = 0.0
 
+            self.publisher_.publish(cmd_vel_manual)
         #if time.time() - lastCall <= maxSilenceTime:
         #   cmd_vel_manual.linear.x = float(cmd_value["linear"])
         #   cmd_vel_manual.angular.z = float(cmd_value["angular"])
