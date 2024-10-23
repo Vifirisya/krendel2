@@ -43,7 +43,8 @@ class TwistPublisher(Node):
             cmd_vel_manual.angular.z = float(angular)
 
             self.publisher_.publish(cmd_vel_manual)
-
+            
+            self.get_logger().info("############### # 3 doing the do 3 3 3#######################333")
                 #lastCall = time.time()
         else:
             cmd_vel_manual.linear.x = 0.0
