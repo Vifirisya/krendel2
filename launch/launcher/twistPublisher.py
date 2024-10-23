@@ -47,8 +47,6 @@ class TwistPublisher(Node):
             cmd_vel_manual.angular.z = float(angular)
 
             self.publisher_.publish(cmd_vel_manual)
-        
-            self.get_logger().info(f"{linear}, {angular}")
             #lastCall = time.time()
         #if time.time() - lastCall <= maxSilenceTime:
         #   cmd_vel_manual.linear.x = float(cmd_value["linear"])
