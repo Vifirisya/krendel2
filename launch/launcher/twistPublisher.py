@@ -13,7 +13,7 @@ with open(os.path.realpath(__file__).replace(f"/twistPublisher.py", "") + "/ip.t
 port = 2001
 
 lastCall = time.time()
-maxSilenceTime = 3
+maxSilenceTime = 10
 
 class TwistPublisher(Node):
     running = True
@@ -44,21 +44,22 @@ class TwistPublisher(Node):
         global lastCall, cmd_value
     
         while self.running:
-            data, address = self.s.recvfrom(2048)
-            data = data.decode("UTF-8")
+            try:
+                data, address = self.s.recvfrom(2048)
+                data = data.decode("UTF-8")
 
-            if data:
-                try:
-                    linear = float(data.split(';')[0])
-                    angular = float(data.split(';')[1])
-                    cmd_value["linear"] = linear
-                    cmd_value["angular"] = angular
+                if data:
+                
+                        linear = float(data.split(';')[0])
+                        angular = float(data.split(';')[1])
+                        cmd_value["linear"] = linear
+                        cmd_value["angular"] = angular
 
-                    lastCall = time.time()
-                except KeyboardInterrupt:
-                    print("ctrl c")
-                    exit()
-                    break
+                        lastCall = time.time()
+            except KeyboardInterrupt:
+                print("ctrl c")
+                exit()
+                break
 
         print("im finally done!!!!!!!")
 
