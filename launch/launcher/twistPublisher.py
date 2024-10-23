@@ -44,7 +44,7 @@ class TwistPublisher(Node):
 
             self.publisher_.publish(cmd_vel_manual)
             
-            self.get_logger().info("############### # 3 doing the do 3 3 3#######################333")
+            self.get_logger().info(f"{linear}, {angular}")
                 #lastCall = time.time()
         else:
             cmd_vel_manual.linear.x = 0.0
