@@ -47,15 +47,15 @@ class TwistPublisher(Node):
             data = data.decode("UTF-8")
 
             if data:
-                try:
-                    linear = float(data.split(';')[0])
-                    angular = float(data.split(';')[1])
-                    cmd_value["linear"] = linear
-                    cmd_value["angular"] = angular
+                #try:
+                linear = float(data.split(';')[0])
+                angular = float(data.split(';')[1])
+                cmd_value["linear"] = linear
+                cmd_value["angular"] = angular
 
-                    lastCall = time.time()
-                except Exception:
-                    pass # pretend nothing happend
+                lastCall = time.time()
+                #except Exception:
+                #    pass # pretend nothing happend
 
         print("im finally done!!!!!!!")
 
@@ -63,6 +63,7 @@ class TwistPublisher(Node):
         print("trying to stop this idiot")
         self.running = False
         self.listenThread.join()
+        time.sleep(2)
 
 node = None
 def start(args=None):
