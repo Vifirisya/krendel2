@@ -32,7 +32,7 @@ class TwistPublisher(Node):
         global lastCall, cmd_value
         cmd_vel_manual = Twist()
 
-        data, address = self.s.recvfrom(128)
+        data, address = self.s.recvfrom(16)
         data = data.decode("UTF-8")
         while not data:
             cmd_vel_manual.linear.x = 0.0
