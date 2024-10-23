@@ -3,7 +3,7 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist
 import socket
 import time
-from threading import Thread
+import multiprocessing
 import os
 
 cmd_value = {"linear" : 0, "angular" : 0}
@@ -25,7 +25,7 @@ class TwistPublisher(Node):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((ip, port))
 
-        self.listenThread = Thread(target=self.listen)
+        self.listenThread = multiprocessing.Process(target=self.listen, args=())
         self.listenThread.start()
 
     def publish(self):
@@ -42,27 +42,30 @@ class TwistPublisher(Node):
 
     def listen(self):
         global lastCall, cmd_value
+    
         while self.running:
             data, address = self.s.recvfrom(2048)
             data = data.decode("UTF-8")
 
             if data:
-                #try:
-                linear = float(data.split(';')[0])
-                angular = float(data.split(';')[1])
-                cmd_value["linear"] = linear
-                cmd_value["angular"] = angular
+                try:
+                    linear = float(data.split(';')[0])
+                    angular = float(data.split(';')[1])
+                    cmd_value["linear"] = linear
+                    cmd_value["angular"] = angular
 
-                lastCall = time.time()
-                #except Exception:
-                #    pass # pretend nothing happend
+                    lastCall = time.time()
+                except KeyboardInterrupt:
+                    print("ctrl c")
+                    exit()
+                    break
 
         print("im finally done!!!!!!!")
 
     def stop(self):
         print("trying to stop this idiot")
         self.running = False
-        self.listenThread.join()
+        self.listenThread.terminate()
         time.sleep(2)
 
 node = None
@@ -74,6 +77,7 @@ def start(args=None):
         rclpy.spin(node)
     finally:
         node.stop()
+        time.sleep(2)
         rclpy.shutdown()
 
 start()
