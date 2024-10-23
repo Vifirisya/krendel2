@@ -25,11 +25,26 @@ class TwistPublisher(Node):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((ip, port))
 
-        self.listenThread = Thread(target=self.listen)
-        self.listenThread.start()
+        #self.listenThread = Thread(target=self.listen)
+        #self.listenThread.start()
 
     def publish(self):
+        global lastCall, cmd_value
         cmd_vel_manual = Twist()
+
+        data, address = self.s.recvfrom(2048)
+        data = data.decode("UTF-8")
+
+        if data:
+            try:
+                linear = float(data.split(';')[0])
+                angular = float(data.split(';')[1])
+                cmd_value["linear"] = linear
+                cmd_value["angular"] = angular
+
+                lastCall = time.time()
+            except Exception:
+                pass # pretend nothing happend
 
         if time.time() - lastCall <= maxSilenceTime:
             cmd_vel_manual.linear.x = float(cmd_value["linear"])
@@ -70,6 +85,7 @@ def start(args=None):
         rclpy.spin(node)
         rclpy.shutdown()
     finally:
-        node.stop()
+        #node.stop()
+        pass
 
 start()
