@@ -32,14 +32,14 @@ class TwistPublisher(Node):
         global lastCall, cmd_value
         cmd_vel_manual = Twist()
 
-        data, address = self.s.recvfrom(2048)
+        data, address = self.s.recvfrom(128)
         data = data.decode("UTF-8")
         while not data:
             cmd_vel_manual.linear.x = 0.0
             cmd_vel_manual.angular.z = 0.0
 
             self.publisher_.publish(cmd_vel_manual)
-            
+
         linear = float(data.split(';')[0])
         angular = float(data.split(';')[1])
 
