@@ -37,7 +37,7 @@ class TwistPublisher(Node):
         else:
             cmd_vel_manual.linear.x = 0.0
             cmd_vel_manual.angular.z = 0.0
-
+        print(cmd_value["linear"], cmd_value["angular"])
         self.publisher_.publish(cmd_vel_manual)
 
     def listen(self):
@@ -55,7 +55,6 @@ class TwistPublisher(Node):
                     cmd_value["angular"] = angular
 
                     lastCall = time.time()
-                    print(data)
                 except KeyboardInterrupt:
                     print("ctrl c")
                     exit()
