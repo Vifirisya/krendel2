@@ -30,6 +30,7 @@ class TwistPublisher(Node):
         self.listenThread.start()
 
     def publish(self):
+        global cmd_value
         cmd_vel_manual = Twist()
 
         #if time.time() - lastCall <= maxSilenceTime:
