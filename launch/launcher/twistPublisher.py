@@ -5,45 +5,53 @@ import socket
 import time
 import multiprocessing
 import os
+from threading import Thread
 
-cmd_value = {"linear" : 0, "angular" : 0}
 ip = ""
 with open(os.path.realpath(__file__).replace(f"/twistPublisher.py", "") + "/ip.txt", "r") as f:
     ip = f.read()
 port = 2001
 
 lastCall = time.time()
-maxSilenceTime = 10
-
+maxSilenceTime = 1
 class TwistPublisher(Node):
     running = True
     def __init__(self):
         super().__init__("twist_publisher")
-        self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
-        #self.publisher_ = self.create_publisher(Twist, "/wow", 10)
-        self.timer_ = self.create_timer(1.0/5.0, self.publish)
-
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((ip, port))
 
-        self.listenThread = multiprocessing.Process(target=self.listen, args=())
+        #self.listenThread = multiprocessing.Process(target=self.listen, args=())
+        #self.listenThread.start()
+        self.listenThread = Thread(target=self.listen)
         self.listenThread.start()
+        #self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
+        self.publisher_ = self.create_publisher(Twist, "/wow", 10)
+        self.timer_ = self.create_timer(1.0/5.0, self.publish)
+        self.cmd_value = (123.0, 321.0)
 
     def publish(self):
-        global cmd_value
+        global maxSilenceTime
+        global lastCall
+        print("publish ", self.cmd_value)
         cmd_vel_manual = Twist()
 
-        #if time.time() - lastCall <= maxSilenceTime:
-        cmd_vel_manual.linear.x = float(cmd_value["linear"])
-        cmd_vel_manual.angular.z = float(cmd_value["angular"])
-        #else:
-        #    cmd_vel_manual.linear.x = 0.0
-         #   cmd_vel_manual.angular.z = 0.0
-        print("zzz", cmd_value["linear"], cmd_value["angular"])
+        if time.time() - lastCall <= maxSilenceTime:
+        #cmd_value = (2.0, 2.0)
+            cmd_vel_manual.linear.x = self.cmd_value[0]
+            cmd_vel_manual.angular.z = self.cmd_value[1]
+        #print("222", cmd_value)
+
+        #cmd_vel_manual.linear.x = float("1.0")
+        #cmd_vel_manual.angular.z = float("2.0")
+        else:
+            cmd_vel_manual.linear.x = 0.0
+            cmd_vel_manual.angular.z = 0.0
+        
         self.publisher_.publish(cmd_vel_manual)
 
     def listen(self):
-        global lastCall, cmd_value
+        global lastCall
     
         while self.running:
             try:
@@ -52,26 +60,28 @@ class TwistPublisher(Node):
 
                 if data:
                 
-                        linear = float(data.split(';')[0])
-                        angular = float(data.split(';')[1])
-                        cmd_value["linear"] = linear
-                        cmd_value["angular"] = angular
+                    linear = float(data.split(';')[0])
+                    angular = float(data.split(';')[1])
+                    
+                    self.cmd_value = (linear, angular)
+                    #self.cmd_value["linear"] = linear
+                    #self.cmd_value["angular"] = angular
 
-                        lastCall = time.time()
+                    lastCall = time.time()
             except KeyboardInterrupt:
                 print("ctrl c")
-                exit()
+                self.stop()
                 break
-
+            #print("listen", self.cmd_value)
             #self.publish()
 
         print("im finally done!!!!!!!")
-
+        exit()
     def stop(self):
         print("trying to stop this idiot")
         self.running = False
-        self.listenThread.terminate()
-        time.sleep(2)
+        #self.listenThread.terminate()
+        #time.sleep(2)
 
 node = None
 def start(args=None):
@@ -82,7 +92,7 @@ def start(args=None):
         rclpy.spin(node)
     finally:
         node.stop()
-        time.sleep(2)
+        #time.sleep(2)
         try:
             rclpy.shutdown()
         finally:
