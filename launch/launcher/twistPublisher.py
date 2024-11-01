@@ -62,7 +62,7 @@ class TwistPublisher(Node):
                 exit()
                 break
 
-            self.publish()
+            #self.publish()
 
         print("im finally done!!!!!!!")
 
@@ -78,7 +78,7 @@ def start(args=None):
     rclpy.init(args=args)
     try:
         node = TwistPublisher()
-        #rclpy.spin(node)
+        rclpy.spin(node)
     finally:
         node.stop()
         time.sleep(2)
