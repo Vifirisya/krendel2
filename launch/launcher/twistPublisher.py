@@ -19,7 +19,8 @@ class TwistPublisher(Node):
     running = True
     def __init__(self):
         super().__init__("twist_publisher")
-        self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
+        #self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
+        self.publisher_ = self.create_publisher(Twist, "/wow", 10)
         self.timer_ = self.create_timer(1.0/5.0, self.publish)
 
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -61,6 +62,8 @@ class TwistPublisher(Node):
                 exit()
                 break
 
+            self.publish()
+
         print("im finally done!!!!!!!")
 
     def stop(self):
@@ -75,7 +78,7 @@ def start(args=None):
     rclpy.init(args=args)
     try:
         node = TwistPublisher()
-        rclpy.spin(node)
+        #rclpy.spin(node)
     finally:
         node.stop()
         time.sleep(2)
