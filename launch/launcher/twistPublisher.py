@@ -19,9 +19,9 @@ class TwistPublisher(Node):
     running = True
     def __init__(self):
         super().__init__("twist_publisher")
-        #self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
-        self.publisher_ = self.create_publisher(Twist, "/wow", 10)
-        self.timer_ = self.create_timer(1.0/5.0, self.publish)
+        self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
+        #self.publisher_ = self.create_publisher(Twist, "/wow", 10)
+        #self.timer_ = self.create_timer(1.0/5.0, self.publish)
 
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.bind((ip, port))
@@ -38,7 +38,7 @@ class TwistPublisher(Node):
         else:
             cmd_vel_manual.linear.x = 0.0
             cmd_vel_manual.angular.z = 0.0
-        print(cmd_value["linear"], cmd_value["angular"])
+        print("zzz", cmd_value["linear"], cmd_value["angular"])
         self.publisher_.publish(cmd_vel_manual)
 
     def listen(self):
