@@ -32,12 +32,12 @@ class TwistPublisher(Node):
     def publish(self):
         cmd_vel_manual = Twist()
 
-        if time.time() - lastCall <= maxSilenceTime:
-            cmd_vel_manual.linear.x = float(cmd_value["linear"])
-            cmd_vel_manual.angular.z = float(cmd_value["angular"])
-        else:
-            cmd_vel_manual.linear.x = 0.0
-            cmd_vel_manual.angular.z = 0.0
+        #if time.time() - lastCall <= maxSilenceTime:
+        #    cmd_vel_manual.linear.x = float(cmd_value["linear"])
+        #    cmd_vel_manual.angular.z = float(cmd_value["angular"])
+        #else:
+        #    cmd_vel_manual.linear.x = 0.0
+         #   cmd_vel_manual.angular.z = 0.0
         print("zzz", cmd_value["linear"], cmd_value["angular"])
         self.publisher_.publish(cmd_vel_manual)
 
