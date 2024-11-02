@@ -78,8 +78,14 @@ class TwistPublisher(Node):
         print("im finally done!!!!!!!")
         exit()
     def stop(self):
-        print("trying to stop this idiot")
-        self.running = False
+        try:
+            print("trying to stop this idiot")
+            self.running = False
+            self.s.close()
+        except KeyboardInterrupt:
+            print("let me stop!!!")
+            self.running = False
+            self.s.close()
         #self.listenThread.terminate()
         #time.sleep(2)
 
@@ -95,6 +101,7 @@ def start(args=None):
         #time.sleep(2)
         try:
             rclpy.shutdown()
+            node.stop()
         finally:
             exit()
 
