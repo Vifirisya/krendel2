@@ -1,6 +1,8 @@
 from launcher import Process, Launcher
 from communication import Communication, myIP
 import os
+import multiprocessing
+import time
 
 IP = myIP()
 PORT = 2000
@@ -22,8 +24,24 @@ for process in LAUNCH_FILES:
 
 launcher.runpy("tp")
 
+def overseer(T, launcher, communication):
+    global IP
+    file_keys ={'l': "lidar",
+                'r':"robot",
+                's':"slam",
+                'n':"navigation",
+                't':"tp"}
+    while True:
+        for process, status in launcher.status():
+            letter = [i for i in file_keys if file_keys[i]==process][0]
+            
+            message = bytes("s:" + letter + ':' + str(int(status)), "UTF-8")
+            communication.simplySend(message, (IP, 2002))
+
+        time.sleep(T)
+
 def launch(data=None):
-    file_keys = {'l': "lidar",
+    file_keys ={'l': "lidar",
                 'r':"robot",
                 's':"slam",
                 'n':"navigation"}
@@ -69,11 +87,15 @@ print(myIP())
 communication = Communication(IP, PORT)
 communication.worklist = worklist
 
+overseerThread = multiprocessing.Process(target=overseer, args=(1, launcher, communication))
+overseerThread.start()
+
 while True:
     try:
         communication.listen()
     except KeyboardInterrupt:
         print("\nSafe stop\n")
+        overseerThread.terminate()
         break
     finally:
         #communication.stop()

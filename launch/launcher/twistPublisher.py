@@ -3,7 +3,7 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist
 import socket
 import time
-import multiprocessing
+#import multiprocessing
 import os
 from threading import Thread
 
