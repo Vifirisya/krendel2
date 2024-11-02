@@ -1,7 +1,7 @@
 from launcher import Process, Launcher
 from communication import Communication, myIP
 import os
-import multiprocessing
+import threading
 import time
 
 IP = myIP()
@@ -23,25 +23,6 @@ for process in LAUNCH_FILES:
     launcher.add(process)
 
 launcher.runpy("tp")
-
-def overseer(T, launcher, communication):
-    global IP
-    file_keys ={'l': "lidar",
-                'r':"robot",
-                's':"slam",
-                'n':"navigation",
-                't':"tp"}
-    while True:
-        totalStatus = launcher.status()
-        for letter in file_keys:
-            process = file_keys[letter]
-            status = totalStatus[process]
-            
-            message = "s:" + letter + ':' + str(int(status))
-            communication.simplySend(message, (IP, 2002))
-            print(message)
-
-        time.sleep(T)
 
 def launch(data=None):
     file_keys ={'l': "lidar",
@@ -90,7 +71,33 @@ print(myIP())
 communication = Communication(IP, PORT)
 communication.worklist = worklist
 
-overseerThread = multiprocessing.Process(target=overseer, args=(1, launcher, communication))
+overseering = True
+def overseer(T):
+    global IP
+    global launcher
+    global communication
+    global overseering
+
+    file_keys ={'l': "lidar",
+                'r':"robot",
+                's':"slam",
+                'n':"navigation",
+                't':"tp"}
+    while overseering:
+        totalStatus = launcher.status()
+
+        for letter in file_keys:
+            process = file_keys[letter]
+            status = totalStatus[process]
+            
+            message = "s:" + letter + ':' + str(int(status))
+            communication.simplySend(message, (IP, 2002))
+            print(process, status)
+        print("\n")
+
+        time.sleep(T)
+
+overseerThread = threading.Thread(target=overseer, args=(1,))
 overseerThread.start()
 
 while True:
@@ -98,7 +105,9 @@ while True:
         communication.listen()
     except KeyboardInterrupt:
         print("\nSafe stop\n")
-        overseerThread.terminate()
+        overseering = False
+        overseerThread.join()
+        time.sleep(2)
         break
     finally:
         #communication.stop()

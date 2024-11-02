@@ -82,7 +82,13 @@ class Launcher:
     def status(self):
         status = {}
         for name, process in self.processes.items():
-            status[name] = process.ping()
+            if process.process is not None:
+                if process.ping():
+                    status[name] = True
+                else:
+                    status[name] = False
+            else:
+                status[name] = False
         return status
 
     def finish(self):
