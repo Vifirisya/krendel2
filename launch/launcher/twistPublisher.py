@@ -28,12 +28,12 @@ class TwistPublisher(Node):
         self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
         #self.publisher_ = self.create_publisher(Twist, "/wow", 10)
         self.timer_ = self.create_timer(1.0/5.0, self.publish)
-        self.cmd_value = (123.0, 321.0)
+        self.cmd_value = (0.0, 0.0)
 
     def publish(self):
         global maxSilenceTime
         global lastCall
-        print("publish ", self.cmd_value)
+        #print("publish ", self.cmd_value)
         cmd_vel_manual = Twist()
 
         if time.time() - lastCall <= maxSilenceTime:

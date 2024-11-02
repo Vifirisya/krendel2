@@ -32,8 +32,10 @@ def overseer(T, launcher, communication):
                 'n':"navigation",
                 't':"tp"}
     while True:
-        for process, status in launcher.status():
-            letter = [i for i in file_keys if file_keys[i]==process][0]
+        totalStatus = launcher.status()
+        for letter in file_keys:
+            process = file_keys[letter]
+            status = totalStatus[process]
             
             message = bytes("s:" + letter + ':' + str(int(status)), "UTF-8")
             communication.simplySend(message, (IP, 2002))
