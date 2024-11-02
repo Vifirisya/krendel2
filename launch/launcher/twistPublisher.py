@@ -18,7 +18,7 @@ class TwistPublisher(Node):
     running = True
     def __init__(self):
         super().__init__("twist_publisher")
-        os.system("kill -9 $(ps -A | grep python | awk \'{print $1}\')")
+        #os.system("kill -9 $(ps -A | grep python | awk \'{print $1}\')")
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.s.bind((ip, port))
