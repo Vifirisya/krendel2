@@ -37,7 +37,7 @@ def overseer(T, launcher, communication):
             process = file_keys[letter]
             status = totalStatus[process]
             
-            message = bytes("s:" + letter + ':' + str(int(status)), "UTF-8")
+            message = "s:" + letter + ':' + str(int(status))
             communication.simplySend(message, (IP, 2002))
 
         time.sleep(T)
