@@ -39,6 +39,7 @@ def overseer(T, launcher, communication):
             
             message = "s:" + letter + ':' + str(int(status))
             communication.simplySend(message, (IP, 2002))
+            print(message)
 
         time.sleep(T)
 
