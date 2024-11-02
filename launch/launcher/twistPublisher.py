@@ -19,6 +19,7 @@ class TwistPublisher(Node):
     def __init__(self):
         super().__init__("twist_publisher")
         self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.s.TCPServer.allow_reuse_address = True
         self.s.bind((ip, port))
 
         #self.listenThread = multiprocessing.Process(target=self.listen, args=())
