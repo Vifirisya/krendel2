@@ -1,0 +1,18 @@
+import os
+from PIL import Image
+import time
+
+fileName = "mapa"
+
+while True:
+    try:
+        os.system(f'ros2 run nav2_map_server map_saver_cli -f src/krendel2/launch/launcher/{fileName}')
+
+        time.sleep(3)
+
+        new_file = f"{fileName}.png"
+        with Image.open(f"{fileName}.pgm") as im:
+            im.save(new_file)
+
+    finally:
+        pass
