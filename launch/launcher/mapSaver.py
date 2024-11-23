@@ -6,7 +6,7 @@ fileName = "map"
 
 while True:
     try:
-        os.system(f'ros2 run nav2_map_server map_saver_cli -f src/krendel2/launch/launcher/{fileName}')
+        os.system(f'ros2 run nav2_map_server map_saver_cli -f src/krendel2/launch/launcher/templates/{fileName}')
 
         time.sleep(3)
 
