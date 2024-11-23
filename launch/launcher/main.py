@@ -3,6 +3,7 @@ from communication import Communication, myIP
 import os
 import threading
 import time
+from points import *
 
 IP = myIP()
 PORT = 2000
@@ -16,13 +17,15 @@ LAUNCH_FILES = [Process("robot", "launch_robot.launch.py"),
                 Process("lidar", "lidar.launch.py"),
                 Process("slam", "slam_toolbox.launch.py"),
                 Process("navigation", "nav2.launch.py"),
-                Process("tp", "src/krendel2/launch/launcher/twistPublisher.py")]
+                Process("tp", "src/krendel2/launch/launcher/twistPublisher.py"),
+                Process("mp", "src/krendel2/launch/launcher/mapPublisher.py"),]
 
 launcher = Launcher(PACKAGE_NAME)
 for process in LAUNCH_FILES:
     launcher.add(process)
 
 launcher.runpy("tp")
+launcher.runpy("mp")
 
 def launch(data=None):
     file_keys ={'l': "lidar",
@@ -65,7 +68,9 @@ worklist = {'l':launch,
             'k':kill,
             'g':go,
             'c':close,
-            'r':reload}
+            'r':reload,
+            'p':newPoint,
+            'd':deletePoint}
 
 print(myIP())
 communication = Communication(IP, PORT)
@@ -92,8 +97,8 @@ def overseer(T):
             
             message = "s:" + letter + ':' + str(int(status))
             communication.simplySend(message, (IP, 2002))
-            print(process, status)
-        print("\n")
+            #print(process, status)
+        #print("\n")
 
         time.sleep(T)
 
