@@ -43,7 +43,7 @@ def mapImage():
 def mapData():
     mapParams = ''
 
-    with open(f'src/krendel2/launch/launcher/trmplates/{fileName}.yaml') as f:
+    with open(f'src/krendel2/launch/launcher/templates/{fileName}.yaml') as f:
             data = yaml.load(f, Loader=yaml.FullLoader)
             mapParams += 'r' + str(data['resolution'])
             mapParams += 'o' + str(data['origin'][0]) + ',' + str(data['origin'][1]) + ',' + str(data['origin'][2])
