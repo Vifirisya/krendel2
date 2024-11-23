@@ -2,7 +2,7 @@ import os
 from PIL import Image
 import time
 
-fileName = "mapa"
+fileName = "map"
 
 while True:
     try:
