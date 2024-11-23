@@ -13,6 +13,7 @@ while True:
         new_file = f"{fileName}.png"
         with Image.open(f"{fileName}.pgm") as im:
             im.save(new_file)
-
+    except FileNotFoundError:
+        pass
     finally:
         pass
