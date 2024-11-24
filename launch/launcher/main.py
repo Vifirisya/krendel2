@@ -108,6 +108,7 @@ overseerThread.start()
 while True:
     try:
         communication.listen()
+        print("a")
     except KeyboardInterrupt:
         print("\nSafe stop\n")
         overseering = False
