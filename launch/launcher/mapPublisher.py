@@ -14,7 +14,7 @@ app = Flask(__name__)
 fileName = 'map'
 scriptsFolder = 'scripts'
 
-png = os.path.realpath(__file__).replace(f"/mapPublisher.py", "") + f"/{fileName}.png"
+png = "launcher/map.png" #os.path.realpath(__file__).replace(f"/mapPublisher.py", "") + f"/{fileName}.png"
   
 def get_all_file_paths(directory): 
     file_paths = [] 
