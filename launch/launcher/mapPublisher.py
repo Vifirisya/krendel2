@@ -13,6 +13,8 @@ with open(os.path.realpath(__file__).replace(f"/mapPublisher.py", "") + "/ip.txt
 app = Flask(__name__, static_folder='/home/timofey/robot_ws/src/krendel2/launch/launcher')
 fileName = 'map'
 scriptsFolder = 'scripts'
+
+png = os.path.realpath(__file__).replace(f"/mapPublisher.py", "") + f"/{fileName}.png", "r"
   
 def get_all_file_paths(directory): 
     file_paths = [] 
@@ -41,7 +43,7 @@ def mapImage():
     finally:
         pass
 
-    return render_template('img.html')
+    return render_template('img.html', pngImg=png)
 
 @app.route('/data')
 def mapData():
