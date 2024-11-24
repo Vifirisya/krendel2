@@ -10,7 +10,7 @@ ip = ""
 with open(os.path.realpath(__file__).replace(f"/mapPublisher.py", "") + "/ip.txt", "r") as f:
     ip = f.read()
 
-app = Flask(__name__, static_folder='/home/timofey/robot_ws/src/krendel2/launch/launcher')
+app = Flask(__name__)
 fileName = 'map'
 scriptsFolder = 'scripts'
 
