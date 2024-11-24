@@ -11,7 +11,7 @@ while True:
         time.sleep(3)
 
         new_file = f"src/krendel2/launch/launcher/{fileName}.png"
-        with Image.open(f"{fileName}.pgm") as im:
+        with Image.open(f"src/krendel2/launch/launcher/{fileName}.pgm") as im:
             im.save(new_file)
     except FileNotFoundError:
         pass
