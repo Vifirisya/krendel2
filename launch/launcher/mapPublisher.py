@@ -31,7 +31,7 @@ def mapImage():
     try:
         os.system(f'ros2 run nav2_map_server map_saver_cli -f src/krendel2/launch/launcher/{fileName}')
 
-        time.sleep(3)
+        #time.sleep(3)
 
         new_file = f"src/krendel2/launch/launcher/{fileName}.png"
         with Image.open(f"src/krendel2/launch/launcher/{fileName}.pgm") as im:
