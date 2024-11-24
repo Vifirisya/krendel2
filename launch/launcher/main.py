@@ -18,8 +18,7 @@ LAUNCH_FILES = [Process("robot", "launch_robot.launch.py"),
                 Process("slam", "slam_toolbox.launch.py"),
                 Process("navigation", "nav2.launch.py"),
                 Process("tp", "src/krendel2/launch/launcher/twistPublisher.py"),
-                Process("mp", "src/krendel2/launch/launcher/mapPublisher.py"),
-                Process("ms", "src/krendel2/launch/launcher/mapSaver.py")]
+                Process("mp", "src/krendel2/launch/launcher/mapPublisher.py")]
 
 launcher = Launcher(PACKAGE_NAME)
 for process in LAUNCH_FILES:
@@ -27,7 +26,6 @@ for process in LAUNCH_FILES:
 
 launcher.runpy("tp")
 launcher.runpy("mp")
-launcher.runpy("ms")
 
 def launch(data=None):
     file_keys ={'l': "lidar",

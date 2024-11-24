@@ -3,7 +3,8 @@ import os
 from PIL import Image
 import yaml
 import points
-from zipfile import ZipFile 
+from zipfile import ZipFile
+import time
 
 ip = ""
 with open(os.path.realpath(__file__).replace(f"/mapPublisher.py", "") + "/ip.txt", "r") as f:
@@ -27,15 +28,18 @@ def get_all_file_paths(directory):
 def mapImage():
     global fileName
 
-    # try:
-    #     os.system(f'ros2 run nav2_map_server map_saver_cli -f src/krendel2/launch/launcher/{fileName}')
+    try:
+        os.system(f'ros2 run nav2_map_server map_saver_cli -f src/krendel2/launch/launcher/{fileName}')
 
-    #     new_file = f"{fileName}.png"
-    #     with Image.open(f"{fileName}.pgm") as im:
-    #         im.save(new_file)
+        time.sleep(3)
 
-    # except FileNotFoundError:
-    #     print(f"{fileName}.pgm not found")
+        new_file = f"src/krendel2/launch/launcher/{fileName}.png"
+        with Image.open(f"src/krendel2/launch/launcher/{fileName}.pgm") as im:
+            im.save(new_file)
+    except FileNotFoundError:
+        pass
+    finally:
+        pass
 
     return render_template('img.html')
 
