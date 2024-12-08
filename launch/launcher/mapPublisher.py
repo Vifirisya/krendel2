@@ -29,6 +29,7 @@ def get_all_file_paths(directory):
 @app.route('/map')
 def mapImage():
     global fileName
+    global png
 
     try:
         os.system(f'ros2 run nav2_map_server map_saver_cli -f src/krendel2/launch/launcher/{fileName}')
