@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response, request, redirect
 import os
 from PIL import Image
 import yaml
@@ -44,7 +44,8 @@ def mapImage():
     finally:
         pass
 
-    return render_template('img.html', pngImg=png)
+    #return render_template('img.html', pngImg=png)
+    return redirect('http://192.168.50.217:2003/launcher/map.png', code=302)
 
 @app.route('/data')
 def mapData():
