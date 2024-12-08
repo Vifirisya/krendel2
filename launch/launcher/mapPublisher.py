@@ -45,7 +45,7 @@ def mapImage():
         pass
 
     #return render_template('img.html', pngImg=png)
-    return redirect('http://192.168.50.217:2003/launcher/map.png', code=302)
+    return redirect(f'http://{ip}:2003/launcher/{fileName}.png', code=302)
 
 @app.route('/data')
 def mapData():
