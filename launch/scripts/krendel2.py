@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.insert(0, '/home/timofey/dev_ws/src/krendel2/launch/launcher')
+sys.path.insert(0, os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher"))
 
 import points
 
