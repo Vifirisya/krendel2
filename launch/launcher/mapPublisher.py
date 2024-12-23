@@ -5,6 +5,7 @@ import yaml
 import points
 from zipfile import ZipFile
 import time
+import socket
 
 ip = ""
 with open(os.path.realpath(__file__).replace(f"/mapPublisher.py", "") + "/ip.txt", "r") as f:
@@ -71,8 +72,10 @@ def code():
     if request.method == 'POST':
         data = request.data.decode('UTF-8')
 
-        with open('src/krendel2/launch/launcher/scripts/main.py', 'w') as f:
+        with open('src/krendel2/launch/scripts/main.py', 'w') as f:
             f.write(data)
+            with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+                s.sendto(bytes("g", "UTF-8"), (ip, 2000))
 
     '''file_paths = get_all_file_paths(directory) 
   

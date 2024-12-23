@@ -18,7 +18,8 @@ LAUNCH_FILES = [Process("robot", "launch_robot.launch.py"),
                 Process("slam", "slam_toolbox.launch.py"),
                 Process("navigation", "nav2.launch.py"),
                 Process("tp", "src/krendel2/launch/launcher/twistPublisher.py"),
-                Process("mp", "src/krendel2/launch/launcher/mapPublisher.py")]
+                Process("mp", "src/krendel2/launch/launcher/mapPublisher.py"),
+                Process("script", "src/krendel2/launch/scripts/main.py")]
 
 launcher = Launcher(PACKAGE_NAME)
 for process in LAUNCH_FILES:
@@ -61,7 +62,7 @@ def speed(data=None):
         communication.simplySend(f"{linear};{angular}", (IP, 2001))
 
 def go(data=None):
-    pass
+    launcher.runpy("script")
 
 worklist = {'l':launch,
             's':speed,
