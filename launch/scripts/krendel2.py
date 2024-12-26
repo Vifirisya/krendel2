@@ -1,16 +1,16 @@
 import os
 import sys
-from geometry_msgs.msg import PoseStamped
-from rclpy.duration import Duration
-import rclpy
+# from geometry_msgs.msg import PoseStamped
+# from rclpy.duration import Duration
+# import rclpy
 
 sys.path.insert(0, os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher"))
 
 import points
-from robot_navigator import *
+# from robot_navigator import *
 
-rclpy.init()
-navigator = BasicNavigator()
+# rclpy.init()
+# navigator = BasicNavigator()
 
 #navigator.waitUntilNav2Active()
 #navigator.changeMap(os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher/map.yaml"))
