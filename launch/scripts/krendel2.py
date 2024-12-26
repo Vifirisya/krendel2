@@ -9,8 +9,8 @@ sys.path.insert(0, os.path.realpath(__file__).replace(f"scripts/krendel2.py", "l
 import points
 from robot_navigator import *
 
-navigator = BasicNavigator()
 rclpy.init()
+navigator = BasicNavigator()
 
 navigator.waitUntilNav2Active()
 navigator.changeMap(os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher/map.yaml"))
