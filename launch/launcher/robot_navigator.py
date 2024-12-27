@@ -108,8 +108,8 @@ class BasicNavigator(Node):
     def goToPose(self, pose):
         # Sends a `NavToPose` action request
         self.debug("Waiting for 'NavigateToPose' action server")
-        while not self.nav_to_pose_client.wait_for_server(timeout_sec=1.0):
-            self.info("'NavigateToPose' action server not available, waiting...")
+        #while not self.nav_to_pose_client.wait_for_server(timeout_sec=1.0):
+        #    self.info("'NavigateToPose' action server not available, waiting...")
 
         goal_msg = NavigateToPose.Goal()
         goal_msg.pose = pose
