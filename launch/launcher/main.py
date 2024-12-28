@@ -55,10 +55,15 @@ def close(data=None):
 def reload(data=None):
     os.system("sudo systemctl reboot")
 
+lastSpeedSend = 0
+speedSendT = 0.2
 def speed(data=None):
-    if data:
+    global lastSpeedSend
+    global speedSendT
+    if data and ((time.time() - lastSpeedSend) >= speedSendT):
         linear = float(data.split('l')[1].split('a')[0])
         angular = float(data.split('a')[1])
+        lastSpeedSend = time.time()
         communication.simplySend(f"{linear};{angular}", (IP, 2001))
 
 def go(data=None):
