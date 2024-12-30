@@ -1,11 +1,11 @@
-twist_mux:
+/twist_mux:
   ros__parameters:
     topics:
       navigation:
-       topic: controller_server/cmd_vel_nav
+       topic: cmd_vel_nav
        timeout: 0.5
        priority: 10
       manual:
-       topic: twist_publisher/cmd_vel_manual  # manual input node
+       topic: cmd_vel_manual  # manual input node
        timeout: 0.5
        priority: 100
