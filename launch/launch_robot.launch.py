@@ -29,13 +29,13 @@ def generate_launch_description():
                 )]), launch_arguments={'use_sim_time': 'false', 'use_ros2_control': 'true'}.items()
     )
 
-    twist_mux_params = os.path.join(get_package_share_directory(package_name), 'config', 'twist_mux.yaml')
-    twist_mux = Node(
-        package="twist_mux",
-        executable="twist_mux",
-        parameters=[{'--params-file':twist_mux_params}, {'use_sim_time': False}],
-        remappings=[('/cmd_vel_out','diff_drive_controller/cmd_vel_unstamped')]
-    )
+    # twist_mux_params = os.path.join(get_package_share_directory(package_name), 'config', 'twist_mux.yaml')
+    # twist_mux = Node(
+    #     package="twist_mux",
+    #     executable="twist_mux",
+    #     parameters=[{'--params-file':twist_mux_params}, {'use_sim_time': False}],
+    #     remappings=[('/cmd_vel_out','diff_drive_controller/cmd_vel_unstamped')]
+    # )
     
     robot_description = Command(['ros2 param get --hide-type /robot_state_publisher robot_description'])
     
@@ -80,7 +80,7 @@ def generate_launch_description():
 
     # Launch them all!
     return LaunchDescription([
-        twist_mux,
+        #twist_mux,
         rsp,
         delayed_controller_manager,
         delayed_diff_drive_spawner,
