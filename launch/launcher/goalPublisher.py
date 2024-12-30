@@ -15,7 +15,6 @@ class GoalPublisher(Node):
 
     def timer_callback(self):
         msg = PoseStamped()
-        msg.data = 'Hello World: %d' % self.i
 
         goal_pose = PoseStamped()
         goal_pose.header.frame_id = 'map'
