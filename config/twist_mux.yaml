@@ -2,10 +2,10 @@
   ros__parameters:
     topics:
       navigation:
-       topic: cmd_vel_nav
-       timeout: 0.5
-       priority: 10
+        topic   : cmd_vel_nav
+        timeout : 0.5
+        priority: 10
       manual:
-       topic: cmd_vel_manual  # manual input node
-       timeout: 0.5
-       priority: 100
+        topic   : cmd_vel_manual
+        timeout : 0.5
+        priority: 100
