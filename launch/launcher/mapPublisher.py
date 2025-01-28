@@ -3,7 +3,6 @@ import os
 from PIL import Image
 import yaml
 import points
-from zipfile import ZipFile
 import time
 import socket
 
