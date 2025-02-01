@@ -28,8 +28,8 @@ class TwistPublisher(Node):
         self.listenThread = Thread(target=self.listen)
         self.listenThread.start()
 
-        #self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
-        self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_nothing", 10)
+        self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
+        #self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_nothing", 10)
 
         #self.publisher_2 = self.create_publisher(Twist, "cmd_vel_manual", 10)
         #self.publisher_3 = self.create_publisher(Twist, "/wow", 10)
@@ -50,9 +50,9 @@ class TwistPublisher(Node):
 
         #cmd_vel_manual.linear.x = float("1.0")
         #cmd_vel_manual.angular.z = float("2.0")
-        else:
-            cmd_vel_manual.linear.x = 0.0
-            cmd_vel_manual.angular.z = 0.0
+        #else:
+        #    cmd_vel_manual.linear.x = 0.0
+        #    cmd_vel_manual.angular.z = 0.0
         
         self.publisher_.publish(cmd_vel_manual)
 
