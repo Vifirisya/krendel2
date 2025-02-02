@@ -21,9 +21,6 @@ ip = ""
 with open(os.path.realpath(__file__).replace(f"/scripts/krendel2.py", "/launcher/ip.txt"), "r") as f:
     ip = f.read()
 port = 2004
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-s.bind((ip, port))
 
 def go(pointName):
     print("!SCRIPT! doing \"GO\" !SCRIPT!")
@@ -33,6 +30,11 @@ def go(pointName):
     goalPublisher = GoalPublisher(pos)
 
     rclpy.spin(goalPublisher)
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    s.bind((ip, port))
+
     finished = False
     while not finished:
         data, address = s.recvfrom(2048)
@@ -45,6 +47,8 @@ def go(pointName):
             elif "Failed to make progress" in data or "Aborting handle" in data:
                 sys.exit()
 
+    s.close()
+    
     #os.system(f"ros2 topic pub /goal_pose geometry_msgs/PoseStamped \"{{header: {{stamp: {{sec: 0}}, frame_id: \'map\'}}, pose: {{position: {{x: {pos[0]}, y: {pos[1]}, z: 0.0}}, orientation: {{w: 1.0}}}}}}\"")
 
     # navigator.goToPose(goal_pose)
