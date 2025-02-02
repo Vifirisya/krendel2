@@ -22,6 +22,8 @@ with open(os.path.realpath(__file__).replace(f"/scripts/krendel2.py", "/launcher
     ip = f.read()
 port = 2004
 
+print(f"!SCRIPT! doing \"{ip}\" !SCRIPT!")
+
 def go(pointName):
     print("!SCRIPT! doing \"GO\" !SCRIPT!")
 
