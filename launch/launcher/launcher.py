@@ -31,7 +31,10 @@ class Process:
             return False
 
     def readLine(self):
-        return self.process.stdout.readline()
+        try:
+            return self.process.stdout.readline()
+        finally: 
+            return ""
 
     def content(self):
         return {"filename": self.filename, "process": self.process, "running":self.running}
