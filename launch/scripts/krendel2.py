@@ -31,7 +31,7 @@ def go(pointName):
     pos = p[pointName]
     goalPublisher = GoalPublisher(pos)
 
-    #rclpy.spin(goalPublisher)
+    rclpy.spin(goalPublisher)
 
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
