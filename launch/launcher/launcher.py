@@ -30,6 +30,9 @@ class Process:
                 inform(f"Process \"{self.name}\" is dead")
             return False
 
+    def readLine(self):
+        return self.process.stdout.readline()
+
     def content(self):
         return {"filename": self.filename, "process": self.process, "running":self.running}
 

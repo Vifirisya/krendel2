@@ -3,6 +3,7 @@ import sys
 from geometry_msgs.msg import PoseStamped
 from rclpy.duration import Duration
 import rclpy
+import socket
 
 sys.path.insert(0, os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher"))
 
@@ -16,6 +17,14 @@ rclpy.init()
 #navigator.waitUntilNav2Active()
 #navigator.changeMap(os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher/map.yaml"))
 
+ip = ""
+with open(os.path.realpath(__file__).replace(f"/scripts/krendel2.py", "/launcher/ip.txt"), "r") as f:
+    ip = f.read()
+port = 2004
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+s.bind((ip, port))
+
 def go(pointName):
     print("!SCRIPT! doing \"GO\" !SCRIPT!")
 
@@ -24,6 +33,17 @@ def go(pointName):
     goalPublisher = GoalPublisher(pos)
 
     rclpy.spin(goalPublisher)
+    finished = False
+    while not finished:
+        data, address = s.recvfrom(2048)
+        data = data.decode("UTF-8")
+
+        if data:
+            if "Goal succeeded" in data or "Reached the goal!" in data:
+                finished = True
+                break
+            elif "Failed to make progress" in data or "Aborting handle" in data:
+                sys.exit()
 
     #os.system(f"ros2 topic pub /goal_pose geometry_msgs/PoseStamped \"{{header: {{stamp: {{sec: 0}}, frame_id: \'map\'}}, pose: {{position: {{x: {pos[0]}, y: {pos[1]}, z: 0.0}}, orientation: {{w: 1.0}}}}}}\"")
 
