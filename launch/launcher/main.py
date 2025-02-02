@@ -107,7 +107,7 @@ def overseer(T):
             
             message = "s:" + letter + ':' + str(int(status))
             communication.simplySend(message, (IP, 2002))
-        if launcher.processes['navigation'] is not None:
+        if launcher.processes['navigation'].process != None:
             communication.simplySend(launcher.processes['navigation'].readLine(), (IP, 2004))
 
             #print(process, status)
