@@ -28,11 +28,9 @@ class TwistPublisher(Node):
         self.listenThread = Thread(target=self.listen)
         self.listenThread.start()
 
-        self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
-        #self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_nothing", 10)
+        #self.publisher_ = self.create_publisher(Twist, "diff_drive_controller/cmd_vel_unstamped", 10)
+        self.publisher_ = self.create_publisher(Twist, "/wow", 10)
 
-        #self.publisher_2 = self.create_publisher(Twist, "cmd_vel_manual", 10)
-        #self.publisher_3 = self.create_publisher(Twist, "/wow", 10)
         self.timer_ = self.create_timer(1.0/5.0, self.publish)
         self.cmd_value = (0.0, 0.0)
 
