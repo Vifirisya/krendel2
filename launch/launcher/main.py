@@ -25,11 +25,10 @@ launcher = Launcher(PACKAGE_NAME)
 for process in LAUNCH_FILES:
     launcher.add(process)
 
-launcher.runpy("tp")
 launcher.runpy("mp")
 
 def launch(data=None):
-    file_keys ={'l': "lidar",
+    file_keys ={'l':"lidar",
                 'r':"robot",
                 's':"slam",
                 'n':"navigation"}
@@ -38,10 +37,11 @@ def launch(data=None):
         launcher.launch(file_keys[data.split(':')[1]])
 
 def kill(data=None):
-    file_keys = {'l': "lidar",
+    file_keys = {'l':"lidar",
                 'r':"robot",
                 's':"slam",
-                'n':"navigation"}
+                'n':"navigation",
+                't':"tp"}
     if data:
         print(data)
         launcher.stop(file_keys[data.split(':')[1]])
@@ -69,6 +69,9 @@ def speed(data=None):
 def go(data=None):
     launcher.runpy("script")
 
+def runTwistPublisher(data=None):
+    launcher.runpy("tp")
+
 worklist = {'l':launch,
             's':speed,
             'k':kill,
@@ -76,7 +79,8 @@ worklist = {'l':launch,
             'c':close,
             'r':reload,
             'p':newPoint,
-            'd':deletePoint}
+            'd':deletePoint,
+            't':runTwistPublisher}
 
 print(myIP())
 communication = Communication(IP, PORT)
