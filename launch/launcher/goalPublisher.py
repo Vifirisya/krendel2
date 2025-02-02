@@ -14,6 +14,7 @@ class GoalPublisher(Node):
         #self.timer = self.create_timer(timer_period, self.timer_callback)
         self.timer_callback()
         self.destroy_node()
+        rclpy.shutdown()
 
     def timer_callback(self):
         msg = PoseStamped()

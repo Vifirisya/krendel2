@@ -11,7 +11,6 @@ import points
 #from robot_navigator import *
 from goalPublisher import GoalPublisher
 
-rclpy.init()
 #navigator = BasicNavigator()
 #navigator.lifecycleStartup()
 #navigator.waitUntilNav2Active()
@@ -26,6 +25,7 @@ print(f"!SCRIPT! doing \"{ip}\" !SCRIPT!")
 
 def go(pointName):
     print("!SCRIPT! doing \"GO\" !SCRIPT!")
+    rclpy.init()
 
     p = points.readPoints()
     pos = p[pointName]
