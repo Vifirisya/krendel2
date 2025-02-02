@@ -41,14 +41,17 @@ def go(pointName):
         data = data.decode("UTF-8")
 
         if data:
+            print(f"!SCRIPT! received \"{data}\" !SCRIPT!")
             if "Goal succeeded" in data or "Reached the goal!" in data:
+                print("\n\nyeeeeeeeeeeeeeeeeeees\n\n")
                 finished = True
                 break
             elif "Failed to make progress" in data or "Aborting handle" in data:
+                print("\n\nnooooooooooooooooo\n\n")
                 sys.exit()
 
     s.close()
-    
+
     #os.system(f"ros2 topic pub /goal_pose geometry_msgs/PoseStamped \"{{header: {{stamp: {{sec: 0}}, frame_id: \'map\'}}, pose: {{position: {{x: {pos[0]}, y: {pos[1]}, z: 0.0}}, orientation: {{w: 1.0}}}}}}\"")
 
     # navigator.goToPose(goal_pose)
