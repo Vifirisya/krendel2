@@ -39,7 +39,9 @@ def go(pointName):
 
     finished = False
     while not finished:
+        print("a")
         data, address = s.recvfrom(2048)
+        print("b")
         data = data.decode("UTF-8")
 
         if data:
