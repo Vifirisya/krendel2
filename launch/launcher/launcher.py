@@ -50,36 +50,36 @@ class Launcher:
     def add(self, process:Process):
         self.processes[process.name] = process
 
+    # Launch ROS package
     def launch(self, name):
-        inform(f"Launching \"{name}\"")
-        filename = self.processes[name].filename
-        self.processes[name].process = subprocess.Popen(["ros2", "launch", self.packageName, filename])
-        self.processes[name].running = True
+        inform(f"Launching \"{name}\"") # Indicate launching
+        filename = self.processes[name].filename # Get filename from process list
+        self.processes[name].process = subprocess.Popen(["ros2", "launch", self.packageName, filename]) # Launch file
+        self.processes[name].running = True # Set process as running
 
     def run(self, name):
-        inform(f"Running \"{name}\"")
-        filename = self.processes[name].filename
-        self.processes[name].process = subprocess.Popen(["ros2", "run", self.packageName, filename])
-        self.processes[name].running = True
+        inform(f"Running \"{name}\"")  # Indicate running
+        filename = self.processes[name].filename # Get filename from process list
+        self.processes[name].process = subprocess.Popen(["ros2", "run", self.packageName, filename]) # Run file
+        self.processes[name].running = True # Set process as running
         
     def runpy(self, name):
-        inform(f"Running \"{name}\"")
-        filename = self.processes[name].filename
-        self.processes[name].process = subprocess.Popen(["python3", filename])
-        self.processes[name].running = True
+        inform(f"Running \"{name}\"")  # Indicate running
+        filename = self.processes[name].filename # Get filename from process list
+        self.processes[name].process = subprocess.Popen(["python3", filename]) # Run python file
+        self.processes[name].running = True # Set process as running
 
     def stop(self, name:str):
-        while self.processes[name].ping():
-            inform(f"Killing \"{name}\"")
+        while self.processes[name].ping(): # Does not stop until process is stopped
+            inform(f"Killing \"{name}\"")  # Indicate stopping
             try:
-                self.processes[name].process.terminate()
-                self.processes[name].running = False
-            except AttributeError:
-                inform(f"Unable to kill \"{name}\"")
-                self.processes[name].running = False
+                self.processes[name].process.terminate() # Send stop signal
+                self.processes[name].running = False # Set process as not running
+            except AttributeError: # In case of failure
+                inform(f"Unable to kill \"{name}\"") # Show error message
+                self.processes[name].running = False # Set proces as not running (to notS use it again)
 
-        self.processes[name].process = None
-        #self.processes[name].process = False
+        self.processes[name].process = None # Delete process (to not use it again)
 
     def ping(self):
         for name, process in self.processes.items():

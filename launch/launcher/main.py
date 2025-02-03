@@ -110,8 +110,6 @@ def overseer(T):
         if launcher.processes['navigation'].process != None:
             communication.simplySend(launcher.processes['navigation'].readLine(), (IP, 2004))
         communication.simplySend("yo", (IP, 2004))
-            #print(process, status)
-        #print("\n")
 
         time.sleep(T)
 
@@ -128,7 +126,6 @@ while True:
         time.sleep(2)
         break
     finally:
-        #communication.stop()
         pass
 
 launcher.finish()
