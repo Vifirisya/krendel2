@@ -31,7 +31,7 @@ def go(pointName):
     pos = p[pointName]
     goalPublisher = GoalPublisher(pos)
 
-    rclpy.spin(goalPublisher)
+    #rclpy.spin(goalPublisher)
 
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -55,7 +55,7 @@ def go(pointName):
                 sys.exit()
 
     s.close()
-
+    rclpy.shutdown()
     #os.system(f"ros2 topic pub /goal_pose geometry_msgs/PoseStamped \"{{header: {{stamp: {{sec: 0}}, frame_id: \'map\'}}, pose: {{position: {{x: {pos[0]}, y: {pos[1]}, z: 0.0}}, orientation: {{w: 1.0}}}}}}\"")
 
     # navigator.goToPose(goal_pose)

@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 
 from geometry_msgs.msg import PoseStamped
-
+import time
 
 class GoalPublisher(Node):
 
@@ -10,11 +10,13 @@ class GoalPublisher(Node):
         super().__init__('goalPublisher')
         self.pos = pos
         self.publisher_ = self.create_publisher(PoseStamped, '/goal_pose', 10)
-        timer_period = 0.5  # seconds
+        #timer_period = 0.5  # seconds
         #self.timer = self.create_timer(timer_period, self.timer_callback)
+        while self.publisher_.get_subscription_count() < 1:
+            time.sleep(0.1)
         self.timer_callback()
         self.destroy_node()
-        rclpy.shutdown()
+        #rclpy.shutdown()
 
     def timer_callback(self):
         msg = PoseStamped()
