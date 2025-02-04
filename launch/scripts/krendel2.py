@@ -29,7 +29,7 @@ def go(pointName):
 
     p = points.readPoints()
     pos = p[pointName]
-    #goalPublisher = GoalPublisher(pos)
+    goalPublisher = GoalPublisher(pos)
 
     #rclpy.spin(goalPublisher)
 
