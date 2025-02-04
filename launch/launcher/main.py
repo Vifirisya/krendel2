@@ -108,8 +108,10 @@ def overseer(T):
             message = "s:" + letter + ':' + str(int(status))
             communication.simplySend(message, (IP, 2002))
         if launcher.processes['navigation'].process != None:
-            communication.simplySend(launcher.processes['navigation'].readLine(), (IP, 2004))
-        communication.simplySend("yo", (IP, 2004))
+            output = launcher.processes['navigation'].readLine()
+            print(f"navigation: {output}")
+            communication.simplySend(output, (IP, 2004))
+        #communication.simplySend("yo", (IP, 2004))
 
         time.sleep(T)
 
