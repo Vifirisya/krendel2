@@ -31,8 +31,11 @@ class Process:
             return False
 
     def readLine(self):
+        inform("reading line")
         try:
-            return next(iter(self.process.stdout.readline))
+            line = self.process.stdout.readline()
+            return line.decode()
+            #return next(iter(lambda: self.process.stdout.read(1), b""))
         finally: 
             return ""
 
@@ -54,19 +57,19 @@ class Launcher:
     def launch(self, name):
         inform(f"Launching \"{name}\"") # Indicate launching
         filename = self.processes[name].filename # Get filename from process list
-        self.processes[name].process = subprocess.Popen(["ros2", "launch", self.packageName, filename], stdout=subprocess.PIPE, text=True) # Launch file
+        self.processes[name].process = subprocess.Popen(["ros2", "launch", self.packageName, filename]) # Launch file
         self.processes[name].running = True # Set process as running
 
     def run(self, name):
         inform(f"Running \"{name}\"")  # Indicate running
         filename = self.processes[name].filename # Get filename from process list
-        self.processes[name].process = subprocess.Popen(["ros2", "run", self.packageName, filename], stdout=subprocess.PIPE, text=True) # Run file
+        self.processes[name].process = subprocess.Popen(["ros2", "run", self.packageName, filename]) # Run file
         self.processes[name].running = True # Set process as running
         
     def runpy(self, name):
         inform(f"Running \"{name}\"")  # Indicate running
         filename = self.processes[name].filename # Get filename from process list
-        self.processes[name].process = subprocess.Popen(["python3", filename], stdout=subprocess.PIPE, text=True) # Run python file
+        self.processes[name].process = subprocess.Popen(["python3", filename]) # Run python file
         self.processes[name].running = True # Set process as running
 
     def stop(self, name:str):
