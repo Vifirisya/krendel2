@@ -62,9 +62,9 @@ def go(pointName):
     publisher.publish(goal_pose)
     # subscription
     # rclpy.spin(goalPublisher)
-    # while publisher.get_subscription_count() > 0:
-    #     time.sleep(0.1)
-    #     print(f"\nwaiting for the end; {pointName}\n")
+    while publisher.get_subscription_count() > 0:
+        time.sleep(0.1)
+        print(f"\nwaiting for the end; {pointName}\n")
     
     goalPublisher.destroy_node()
     rclpy.shutdown()
