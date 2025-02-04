@@ -38,8 +38,8 @@ def go(pointName):
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = 'map'
     goal_pose.header.stamp = node.get_clock().now().to_msg()
-    goal_pose.pose.position.x = self.pos[0]
-    goal_pose.pose.position.y = self.pos[1]
+    goal_pose.pose.position.x = pos[0]
+    goal_pose.pose.position.y = pos[1]
     goal_pose.pose.position.z = 0.0
     goal_pose.pose.orientation.x = 0.0
     goal_pose.pose.orientation.y = 0.0
