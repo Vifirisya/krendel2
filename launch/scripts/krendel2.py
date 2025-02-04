@@ -20,6 +20,7 @@ import points
 #navigator.waitUntilNav2Active()
 #navigator.changeMap(os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher/map.yaml"))
 
+iteration = 0
 ip = ""
 with open(os.path.realpath(__file__).replace(f"/scripts/krendel2.py", "/launcher/ip.txt"), "r") as f:
     ip = f.read()
@@ -30,6 +31,7 @@ def feedbackCallback(msg):
     print(msg)
 
 def go(pointName):
+    global iteration
     print("!SCRIPT! doing \"GO\" !SCRIPT!")
 
     p = points.readPoints()
@@ -38,9 +40,10 @@ def go(pointName):
 
     rclpy.init()
 
-    goalPublisher = rclpy.create_node("goalPublisher")
+    goalPublisher = rclpy.create_node(f"goalPublisher_{iteration}")
+    iteration += 1
     publisher = goalPublisher.create_publisher(PoseStamped, '/goal_pose', 10)
-    subscription = goalPublisher.create_subscription(String, '/follow_path/_action/status', feedbackCallback, 10)
+    #subscription = goalPublisher.create_subscription(String, '/follow_path/_action/status', feedbackCallback, 10)
 
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = 'map'
@@ -57,13 +60,14 @@ def go(pointName):
         time.sleep(0.1)
         print(f"\nwaiting for connection; {pointName}\n")
     publisher.publish(goal_pose)
-    subscription
-    rclpy.spin(goalPublisher)
+    # subscription
+    # rclpy.spin(goalPublisher)
     # while publisher.get_subscription_count() > 0:
     #     time.sleep(0.1)
     #     print(f"\nwaiting for the end; {pointName}\n")
+    
+    goalPublisher.destroy_node()
     rclpy.shutdown()
-
 
 
     # print("!SCRIPT! doing \"GO\" !SCRIPT!")
