@@ -43,7 +43,7 @@ def go(pointName):
     goalPublisher = rclpy.create_node(f"goalPublisher_{iteration}")
     iteration += 1
     publisher = goalPublisher.create_publisher(PoseStamped, '/goal_pose', 10)
-    #subscription = goalPublisher.create_subscription(String, '/follow_path/_action/status', feedbackCallback, 10)
+    subscription = goalPublisher.create_subscription(String, '/follow_path/_action/status', feedbackCallback, 10)
 
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = 'map'
@@ -60,11 +60,10 @@ def go(pointName):
         time.sleep(0.1)
         print(f"\nwaiting for connection; {pointName}\n")
     publisher.publish(goal_pose)
-    # subscription
+    while True:
+        subscription
     # rclpy.spin(goalPublisher)
-    while publisher.get_subscription_count() > 0:
-        time.sleep(0.1)
-        print(f"\nwaiting for the end; {pointName}\n")
+    
     
     goalPublisher.destroy_node()
     rclpy.shutdown()
