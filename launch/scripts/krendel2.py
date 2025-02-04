@@ -9,6 +9,7 @@ from nav2_msgs.action import NavigateToPose, FollowPath
 from rclpy.action import ActionClient
 from action_msgs.msg import GoalStatus
 from std_msgs.msg import String
+import subprocess
 sys.path.insert(0, os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher"))
 
 import points
@@ -60,9 +61,17 @@ def go(pointName):
         time.sleep(0.1)
         print(f"\nwaiting for connection; {pointName}\n")
     publisher.publish(goal_pose)
+
+    process = subprocess.Popen(['ros2', 'topic', 'echo', '/follow_path/_action/status'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
     while True:
-        subscription
-    # rclpy.spin(goalPublisher)
+        line = process.stdout.readline()
+        if line:
+            if 'status: ' in line:
+                line = line['status: ':]
+                print('\n\n')
+                print(line)
+                print('\n\n')
     
     
     goalPublisher.destroy_node()
