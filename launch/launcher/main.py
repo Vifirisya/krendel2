@@ -109,25 +109,25 @@ def overseer(T):
             message = "s:" + letter + ':' + str(int(status))
             communication.simplySend(message, (IP, 2002))
 
-        list_of_files = glob.glob('/home/timofey/.ros/log/controller_server*.log') # * means all if need specific format then *.csv
-        filename = max(list_of_files, key=os.path.getctime)
-        output = ""
-        fullname = os.path.join("/home/timofey/.ros/log/", filename)
-        #print(fullname)
+        # list_of_files = glob.glob('/home/timofey/.ros/log/controller_server*.log') # * means all if need specific format then *.csv
+        # filename = max(list_of_files, key=os.path.getctime)
+        # output = ""
+        # fullname = os.path.join("/home/timofey/.ros/log/", filename)
+        # #print(fullname)
 
-        if launcher.processes['navigation'].process != None:
-            #output = launcher.processes['navigation'].readLine()
+        # if launcher.processes['navigation'].process != None:
+        #     #output = launcher.processes['navigation'].readLine()
             
-            with open(fullname, "r") as f:
-                try:
-                    output = f.read().split('\n')[-2]
-                except IndexError:
-                    #print("")
-                    pass
-            if output:
-                #print("navigation: ", end="")
-                #print(output, end="\n")
-                communication.simplySend(output, (IP, 2004))
+        #     with open(fullname, "r") as f:
+        #         try:
+        #             output = f.read().split('\n')[-2]
+        #         except IndexError:
+        #             #print("")
+        #             pass
+        #     if output:
+        #         #print("navigation: ", end="")
+        #         #print(output, end="\n")
+        #         communication.simplySend(output, (IP, 2004))
         #communication.simplySend("yo", (IP, 2004))
 
         #time.sleep(T)

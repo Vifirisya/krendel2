@@ -14,6 +14,10 @@ class GoalPublisher(Node):
         #self.timer = self.create_timer(timer_period, self.timer_callback)
         while self.publisher_.get_subscription_count() < 1:
             time.sleep(0.1)
+            print("\nwaiting for connection\n")
+        while self.publisher_.get_subscription_count() > 0:
+            time.sleep(0.1)
+            print("\nwaiting for the end\n")
         self.timer_callback()
         self.destroy_node()
         #rclpy.shutdown()

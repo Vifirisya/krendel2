@@ -33,26 +33,26 @@ def go(pointName):
 
     #rclpy.spin(goalPublisher)
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    s.bind((ip, port))
+    # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    # s.bind((ip, port))
 
-    finished = False
-    while not finished:
-        #print("a")
-        data, address = s.recvfrom(2048)
-        #print("b")
-        data = data.decode("UTF-8")
+    # finished = False
+    # while not finished:
+    #     #print("a")
+    #     data, address = s.recvfrom(2048)
+    #     #print("b")
+    #     data = data.decode("UTF-8")
 
-        if data:
-            print(f"!SCRIPT! received \"{data}\" !SCRIPT!")
-            if "Goal succeeded" in data or "Reached the goal!" in data:
-                print("\n\nyeeeeeeeeeeeeeeeeeees\n\n")
-                finished = True
-                break
-            elif "Failed to make progress" in data or "Aborting handle" in data:
-                print("\n\nnooooooooooooooooo\n\n")
-                sys.exit()
+    #     if data:
+    #         print(f"!SCRIPT! received \"{data}\" !SCRIPT!")
+    #         if "Goal succeeded" in data or "Reached the goal!" in data:
+    #             print("\n\nyeeeeeeeeeeeeeeeeeees\n\n")
+    #             finished = True
+    #             break
+    #         elif "Failed to make progress" in data or "Aborting handle" in data:
+    #             print("\n\nnooooooooooooooooo\n\n")
+    #             sys.exit()
 
     s.close()
     rclpy.shutdown()
