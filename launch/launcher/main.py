@@ -109,7 +109,8 @@ def overseer(T):
             communication.simplySend(message, (IP, 2002))
         if launcher.processes['navigation'].process != None:
             output = launcher.processes['navigation'].readLine()
-            print(f"navigation: {output}")
+            print("navigation: ", end="")
+            print(output, end="\n")
             communication.simplySend(output, (IP, 2004))
         #communication.simplySend("yo", (IP, 2004))
 
