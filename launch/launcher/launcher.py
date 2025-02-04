@@ -32,7 +32,7 @@ class Process:
 
     def readLine(self):
         try:
-            return self.process.stdout.readline
+            return next(iter(self.process.stdout.readline))
         finally: 
             return ""
 
