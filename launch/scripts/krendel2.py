@@ -4,6 +4,7 @@ from geometry_msgs.msg import PoseStamped
 from rclpy.duration import Duration
 import rclpy
 import socket
+import time
 
 sys.path.insert(0, os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher"))
 
@@ -25,12 +26,34 @@ print(f"!SCRIPT! doing \"{ip}\" !SCRIPT!")
 
 def go(pointName):
     print("!SCRIPT! doing \"GO\" !SCRIPT!")
-    rclpy.init()
 
     p = points.readPoints()
     pos = p[pointName]
-    goalPublisher = GoalPublisher(pos)
+    #goalPublisher = GoalPublisher(pos)
 
+    rclpy.init()
+    node = rclpy.create_node("goalPublisher")
+    publisher = node.create_publisher(PoseStamped, '/goal_pose', 10)
+
+    goal_pose = PoseStamped()
+    goal_pose.header.frame_id = 'map'
+    goal_pose.header.stamp = node.get_clock().now().to_msg()
+    goal_pose.pose.position.x = self.pos[0]
+    goal_pose.pose.position.y = self.pos[1]
+    goal_pose.pose.position.z = 0.0
+    goal_pose.pose.orientation.x = 0.0
+    goal_pose.pose.orientation.y = 0.0
+    goal_pose.pose.orientation.z = 0.0
+    goal_pose.pose.orientation.w = 1.0
+
+    while publisher.get_subscription_count() < 1:
+        time.sleep(0.1)
+        print(f"\nwaiting for connection; {pointName}\n")
+    publisher.publish(goal_pose)
+    while publisher.get_subscription_count() > 0:
+        time.sleep(0.1)
+        print(f"\nwaiting for the end; {pointName}\n")
+    rclpy.shutdown()
     #rclpy.spin(goalPublisher)
 
     # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -54,8 +77,8 @@ def go(pointName):
     #             print("\n\nnooooooooooooooooo\n\n")
     #             sys.exit()
 
-    s.close()
-    rclpy.shutdown()
+    #s.close()
+    #rclpy.shutdown()
     #os.system(f"ros2 topic pub /goal_pose geometry_msgs/PoseStamped \"{{header: {{stamp: {{sec: 0}}, frame_id: \'map\'}}, pose: {{position: {{x: {pos[0]}, y: {pos[1]}, z: 0.0}}, orientation: {{w: 1.0}}}}}}\"")
 
     # navigator.goToPose(goal_pose)

@@ -20,6 +20,7 @@ class GoalPublisher(Node):
             time.sleep(0.1)
             print("\nwaiting for the end\n")
         self.destroy_node()
+        del self
         #rclpy.shutdown()
 
     def timer_callback(self):
