@@ -40,7 +40,7 @@ def go(pointName):
 
     goalPublisher = rclpy.create_node("goalPublisher")
     publisher = goalPublisher.create_publisher(PoseStamped, '/goal_pose', 10)
-    subscription = goalPublisher.create_subscription(String, '/follow_path/_action/status', feedbackCallback)
+    subscription = goalPublisher.create_subscription(String, '/follow_path/_action/status', feedbackCallback, 10)
 
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = 'map'
