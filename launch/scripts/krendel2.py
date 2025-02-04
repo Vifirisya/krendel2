@@ -97,12 +97,15 @@ def go(pointName):
         print("not accepted :(((((((((((((")
         sys.exit()
 
+    print("\n\n\n\n done \n\n\n\n")
+
     result_future = goal_handle.get_result_async()
     if result_future.result().status == GoalStatus.STATUS_SUCCEEDED:
         print("\n\nyoooooooo yes yeeeeeeeeeeees\n\n")
     else:
         print("\n\nnoooooooooooooooooooooooooo\n\n")
 
+    rclpy.shutdown()
     #rclpy.spin(goalPublisher)
 
     # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
