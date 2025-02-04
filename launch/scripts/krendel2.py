@@ -29,7 +29,7 @@ def go(pointName):
 
     p = points.readPoints()
     pos = p[pointName]
-    goalPublisher = GoalPublisher(pos)
+    #goalPublisher = GoalPublisher(pos)
 
     #rclpy.spin(goalPublisher)
 
@@ -39,9 +39,9 @@ def go(pointName):
 
     finished = False
     while not finished:
-        print("a")
+        #print("a")
         data, address = s.recvfrom(2048)
-        print("b")
+        #print("b")
         data = data.decode("UTF-8")
 
         if data:
