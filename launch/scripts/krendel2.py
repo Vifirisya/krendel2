@@ -5,10 +5,10 @@ from rclpy.duration import Duration
 import rclpy
 import socket
 import time
-from nav2_msgs.action import NavigateToPose
+from nav2_msgs.action import NavigateToPose, FollowPath
 from rclpy.action import ActionClient
 from action_msgs.msg import GoalStatus
-
+from std_msgs.msg import String
 sys.path.insert(0, os.path.realpath(__file__).replace(f"scripts/krendel2.py", "launcher"))
 
 import points
@@ -25,44 +25,11 @@ with open(os.path.realpath(__file__).replace(f"/scripts/krendel2.py", "/launcher
     ip = f.read()
 port = 2004
 
-def feedbackCallback():
-    print("Going somwhere...")
+def feedbackCallback(msg):
+    print("aaaaaa  ", end="")
+    print(msg)
 
 def go(pointName):
-    # print("!SCRIPT! doing \"GO\" !SCRIPT!")
-
-    # p = points.readPoints()
-    # pos = p[pointName]
-    # #goalPublisher = GoalPublisher(pos)
-
-    # rclpy.init()
-
-    # goalPublisher = rclpy.create_node("goalPublisher")
-    # publisher = goalPublisher.create_publisher(PoseStamped, '/goal_pose', 10)
-    # subscriber = goalPublisher.create_subscription()
-
-    # goal_pose = PoseStamped()
-    # goal_pose.header.frame_id = 'map'
-    # goal_pose.header.stamp = goalPublisher.get_clock().now().to_msg()
-    # goal_pose.pose.position.x = pos[0]
-    # goal_pose.pose.position.y = pos[1]
-    # goal_pose.pose.position.z = 0.0
-    # goal_pose.pose.orientation.x = 0.0
-    # goal_pose.pose.orientation.y = 0.0
-    # goal_pose.pose.orientation.z = 0.0
-    # goal_pose.pose.orientation.w = 1.0
-
-    # while publisher.get_subscription_count() < 1:
-    #     time.sleep(0.1)
-    #     print(f"\nwaiting for connection; {pointName}\n")
-    # publisher.publish(goal_pose)
-    # while publisher.get_subscription_count() > 0:
-    #     time.sleep(0.1)
-    #     print(f"\nwaiting for the end; {pointName}\n")
-    # rclpy.shutdown()
-
-
-
     print("!SCRIPT! doing \"GO\" !SCRIPT!")
 
     p = points.readPoints()
@@ -72,7 +39,8 @@ def go(pointName):
     rclpy.init()
 
     goalPublisher = rclpy.create_node("goalPublisher")
-    nav_to_pose_client = ActionClient(goalPublisher, NavigateToPose, 'navigate_to_pose')
+    publisher = goalPublisher.create_publisher(PoseStamped, '/goal_pose', 10)
+    subscription = goalPublisher.create_subscription(String, '/follow_path/_action/status', feedbackCallback)
 
     goal_pose = PoseStamped()
     goal_pose.header.frame_id = 'map'
@@ -85,27 +53,65 @@ def go(pointName):
     goal_pose.pose.orientation.z = 0.0
     goal_pose.pose.orientation.w = 1.0
 
-    goal_msg = NavigateToPose.Goal()
-    goal_msg.pose = goal_pose
-
-    send_goal_future = nav_to_pose_client.send_goal_async(goal_msg,
-                                                                feedbackCallback)
-    rclpy.spin_until_future_complete(goalPublisher, send_goal_future)
-    goal_handle = send_goal_future.result()
-
-    if not goal_handle.accepted:
-        print("not accepted :(((((((((((((")
-        sys.exit()
-
-    print("\n\n\n\n done \n\n\n\n")
-
-    result_future = goal_handle.get_result_async()
-    if result_future.result().status == GoalStatus.STATUS_SUCCEEDED:
-        print("\n\nyoooooooo yes yeeeeeeeeeeees\n\n")
-    else:
-        print("\n\nnoooooooooooooooooooooooooo\n\n")
-
+    while publisher.get_subscription_count() < 1:
+        time.sleep(0.1)
+        print(f"\nwaiting for connection; {pointName}\n")
+    publisher.publish(goal_pose)
+    subscription
+    rclpy.spin(goalPublisher)
+    # while publisher.get_subscription_count() > 0:
+    #     time.sleep(0.1)
+    #     print(f"\nwaiting for the end; {pointName}\n")
     rclpy.shutdown()
+
+
+
+    # print("!SCRIPT! doing \"GO\" !SCRIPT!")
+
+    # p = points.readPoints()
+    # pos = p[pointName]
+    # #goalPublisher = GoalPublisher(pos)
+
+    # rclpy.init()
+
+    # goalPublisher = rclpy.create_node("goalPublisher")
+    # publisher = goalPublisher.create_publisher(PoseStamped, '/goal_pose', 10)
+    # #nav_to_pose_client = ActionClient(goalPublisher, NavigateToPose, 'navigate_to_pose')
+
+    # goal_pose = PoseStamped()
+    # goal_pose.header.frame_id = 'map'
+    # goal_pose.header.stamp = goalPublisher.get_clock().now().to_msg()
+    # goal_pose.pose.position.x = pos[0]
+    # goal_pose.pose.position.y = pos[1]
+    # goal_pose.pose.position.z = 0.0
+    # goal_pose.pose.orientation.x = 0.0
+    # goal_pose.pose.orientation.y = 0.0
+    # goal_pose.pose.orientation.z = 0.0
+    # goal_pose.pose.orientation.w = 1.0
+
+
+
+    # publisher.publish(goal_pose)
+
+    # send_goal_future = nav_to_pose_client.send_goal_async(goal_msg,
+    #                                                             feedbackCallback)
+    # rclpy.spin_until_future_complete(goalPublisher, send_goal_future)
+    # goal_handle = send_goal_future.result()
+
+    # if not goal_handle.accepted:
+    #     print("not accepted :(((((((((((((")
+    #     sys.exit()
+
+    # print("\n\n\n\n done \n\n\n\n")
+
+    # result_future = goal_handle.get_result_async()
+    # if result_future:
+    #     if result_future.result().status == GoalStatus.STATUS_SUCCEEDED:
+    #         print("\n\nyoooooooo yes yeeeeeeeeeeees\n\n")
+    #     else:
+    #         print("\n\nnoooooooooooooooooooooooooo\n\n")
+
+    # rclpy.shutdown()
     #rclpy.spin(goalPublisher)
 
     # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
