@@ -62,13 +62,16 @@ def go(pointName):
         print(f"\nWaiting for connection; {pointName}\n")
     publisher.publish(goal_pose)
 
-    result = subprocess.call(['python3', 'goalChecker.py'])#, text=True)
+    process = subprocess.Popen(['python3', 'goalChecker.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    stdout, stderr = process.communicate()
     goalPublisher.destroy_node()
     rclpy.shutdown()
 
-    if result == 1:
+    print(stdout)
+
+    if process.returncode == 1:
         print("Success!!!!!!!!!!")
-    elif result == 2:
+    elif process.returncode == 2:
         print("Error!!!!!!!!!")
         sys.exit()
 
