@@ -66,9 +66,9 @@ def go(pointName):
     goalPublisher.destroy_node()
     rclpy.shutdown()
 
-    if result == 0:
+    if result == 1:
         print("Success!!!!!!!!!!")
-    else:
+    elif result == 2:
         print("Error!!!!!!!!!")
         sys.exit()
 
