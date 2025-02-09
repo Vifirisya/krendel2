@@ -18,10 +18,10 @@ def feedbackCallback(msg:GoalStatusArray):
             #rclpy.shutdown()
             #goalPublisher.destroy_node()
             #rclpy.shutdown()
-            sys.exit()
+            sys.exit(0)
         if status == 5 or status == 6:
             print("error")
-            sys.exit()
+            sys.exit(1)
     past_status = status
 
 rclpy.init()
