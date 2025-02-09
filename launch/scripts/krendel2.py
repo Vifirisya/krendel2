@@ -73,7 +73,7 @@ def go(pointName):
         print("Success!!!!!!!!!!")
     elif process.returncode == 2:
         print("Error!!!!!!!!!")
-        sys.exit()
+        #sys.exit()
 
     # print("!SCRIPT! doing \"GO\" !SCRIPT!")
 
