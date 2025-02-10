@@ -65,8 +65,9 @@ def go(pointName):
     rclpy.shutdown()
     process = subprocess.Popen(['python3', 'goalChecker.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     stdout, stderr = process.communicate()
-
+    print("!!!Important")
     print(stdout)
+    print("!!!Important")
 
     # if returncode == 0:
     #     print("Success!!!!!!!!!!")
