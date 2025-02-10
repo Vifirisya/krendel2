@@ -72,11 +72,11 @@ def go(pointName):
     print(process.returncode)
     print("!!!Important")
 
-    # if returncode == 0:
-    #     print("Success!!!!!!!!!!")
-    # else:
-    #     print("Error!!!!!!!!!")
-        #sys.exit()
+    if returncode == 0:
+        print("Success!!!!!!!!!!")
+    else:
+        print("Error!!!!!!!!!")
+        go(pointName)
 
     # print("!SCRIPT! doing \"GO\" !SCRIPT!")
 
