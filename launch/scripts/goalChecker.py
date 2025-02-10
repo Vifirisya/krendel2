@@ -11,7 +11,7 @@ def feedbackCallback(msg:GoalStatusArray):
     global goalPublisher
     global working
     status = msg.status_list[-1].status
-    if past_status == 2:
+    if past_status != 4 and past_status != 0:
         if status == 4:
             print("done")
             #working = False
@@ -19,9 +19,9 @@ def feedbackCallback(msg:GoalStatusArray):
             #goalPublisher.destroy_node()
             #rclpy.shutdown()
             sys.exit(1)
-        if status == 5 or status == 6:
-            print("error")
-            sys.exit(2)
+    if status == 5 or status == 6:
+        print("error")
+        sys.exit(2)
     past_status = status
 
 rclpy.init()
