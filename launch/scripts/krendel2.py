@@ -72,7 +72,7 @@ def go(pointName):
     print(process.returncode)
     print("!!!Important")
 
-    if returncode == 0:
+    if process.returncode == 0:
         print("Success!!!!!!!!!!")
     else:
         print("Error!!!!!!!!!")
