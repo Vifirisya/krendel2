@@ -63,13 +63,13 @@ def go(pointName):
     publisher.publish(goal_pose)
 
     process = subprocess.Popen(['python3', 'goalChecker.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    stdout, stderr = process.communicate()
+    returncode = process.wait()
     goalPublisher.destroy_node()
     rclpy.shutdown()
 
-    print(stdout)
+    print(returncode)
 
-    if process.returncode == 0:
+    if returncode == 0:
         print("Success!!!!!!!!!!")
     else:
         print("Error!!!!!!!!!")
