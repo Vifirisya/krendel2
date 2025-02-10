@@ -64,10 +64,10 @@ def go(pointName):
     goalPublisher.destroy_node()
     rclpy.shutdown()
     process = subprocess.Popen(['python3', os.path.realpath(__file__).replace(f"/krendel2.py", "goalChecker.py")], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    while process.poll() == None:
-        time.sleep(1)
+    while True:
         print(f"Doing {pointName}")
-    #stdout, stderr = process.communicate()
+        stdout, stderr = process.communicate()
+        print(stdout, stderr)
     print("!!!Important")
     print(process.returncode)
     print("!!!Important")
