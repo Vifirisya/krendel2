@@ -69,9 +69,9 @@ def go(pointName):
 
     print(stdout)
 
-    if process.returncode == 1:
+    if process.returncode == 0:
         print("Success!!!!!!!!!!")
-    elif process.returncode == 2:
+    else:
         print("Error!!!!!!!!!")
         #sys.exit()
 
