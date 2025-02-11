@@ -68,6 +68,9 @@ def speed(data=None):
         communication.simplySend(f"{linear};{angular}", (IP, 2001))
 
 def go(data=None):
+    global launcher
+    if launcher.processes["script"].running:
+        launcher.stop("script")
     launcher.runpy("script")
 
 def runTwistPublisher(data=None):
