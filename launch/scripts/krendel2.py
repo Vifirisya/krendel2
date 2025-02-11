@@ -62,12 +62,15 @@ def go(pointName):
         print(f"\nWaiting for connection; {pointName}\n")
     publisher.publish(goal_pose)
 
+    goalPublisher.destroy_node()
+    rclpy.shutdown()
+    
     process = subprocess.Popen(['python3', os.path.realpath(__file__).replace(f"krendel2.py", "goalChecker.py")], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     
     maxI = 30
     i = 0
     while process.poll() == None:
-        publisher.publish(goal_pose)
+        #publisher.publish(goal_pose)
         time.sleep(1)
         print(f"Doing {pointName}")
         i+=1
@@ -75,9 +78,6 @@ def go(pointName):
         if i >= maxI:
             process.terminate()
             break
-
-    goalPublisher.destroy_node()
-    rclpy.shutdown()
 
     print("!!!Important")
     print(process.returncode)
