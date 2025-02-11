@@ -65,7 +65,9 @@ def go(pointName):
     rclpy.shutdown()
     process = subprocess.Popen(['python3', os.path.realpath(__file__).replace(f"krendel2.py", "goalChecker.py")], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     try:
-        process.wait(25)
+        while process.poll() == None:
+            time.sleep(0.5)
+            print(f"Doing {pointName}")
         print("!!!Important")
         print(process.returncode)
         print("!!!Important")
