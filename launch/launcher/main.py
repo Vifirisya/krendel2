@@ -76,6 +76,19 @@ def go(data=None):
 def runTwistPublisher(data=None):
     launcher.runpy("tp")
 
+def eraseMap(data=None):
+    with open(os.path.realpath(__file__).replace(f"/main.py", "/map.pgm"), "w") as f:
+        f.write("")
+    
+    with open(os.path.realpath(__file__).replace(f"/main.py", "/map.yaml"), "w") as f:
+        f.write('''image: map.pgm
+mode: trinary
+resolution: 0.05
+origin: [0, 0, 0]
+negate: 0
+occupied_thresh: 0
+free_thresh: 0''')
+
 worklist = {'l':launch,
             's':speed,
             'k':kill,
@@ -84,7 +97,8 @@ worklist = {'l':launch,
             'r':reload,
             'p':newPoint,
             'd':deletePoint,
-            't':runTwistPublisher}
+            't':runTwistPublisher,
+            'e':eraseMap}
 
 print(myIP())
 communication = Communication(IP, PORT)
