@@ -24,6 +24,7 @@ slam_toolbox:
     map_file_name: /home/timofey/robot_ws/src/krendel2/launch/launcher/map
     # map_start_pose: [0.0, 0.0, 0.0]
     #map_start_at_dock: true
+    map_localize: true
 
     debug_logging: false
     throttle_scans: 1
