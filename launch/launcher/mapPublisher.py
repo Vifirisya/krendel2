@@ -33,10 +33,7 @@ def mapImage():
 
     try:
         os.system(f'ros2 run nav2_map_server map_saver_cli -f src/krendel2/launch/launcher/{fileName}')
-        os.system('ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph')
-        #os.system('''ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph "name:
-#  data: '/home/timofey/robot_ws/src/krendel2/launch/launcher/map'"''')
-        #time.sleep(3)
+        os.system('ros2 service call /slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph \"filename: \'src/krendel2/launch/launcher/map\'\"')
 
         new_file = f"src/krendel2/launch/launcher/{fileName}.png"
         with Image.open(f"src/krendel2/launch/launcher/{fileName}.pgm") as im:
