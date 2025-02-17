@@ -82,7 +82,7 @@ def eraseMap(data=None):
         os.remove(os.path.realpath(__file__).replace(f"/main.py", "/map.posegraph"))
         print("The map is erased")
     except FileNotFoundError:
-        print>("The map has already been erased")
+        print("The map has already been erased")
 
 worklist = {'l':launch,
             's':speed,
